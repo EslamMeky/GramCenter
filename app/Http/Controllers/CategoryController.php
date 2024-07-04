@@ -20,6 +20,7 @@ class CategoryController extends Controller
                 'name' => 'required',
                 'desc' => 'required',
                 'photo' => 'required',
+                'price'=>'required',
                 'type'=>'required',
                 'status'=>'required',
 
@@ -36,6 +37,7 @@ class CategoryController extends Controller
                 'name'=> $request->name,
                 'desc'=> $request->desc,
                 'photo'=> $pathFile,
+                'price'=>$request->price,
                 'type'=>$request->type,
                 'status'=>$request->status,
             ]);
@@ -43,8 +45,8 @@ class CategoryController extends Controller
         }
         catch (\Exception $ex)
         {
-//            return $this->ReturnError($ex->getCode(),$ex->getCode());
-            return $ex;
+            return $this->ReturnError($ex->getCode(),$ex->getCode());
+//            return $ex;
         }
 
     }
@@ -88,6 +90,7 @@ class CategoryController extends Controller
                 'name' => 'required',
                 'desc' => 'required',
                 'type' => 'required',
+                'price'=>'required',
                 'status'=>'required',
             ];
 
@@ -110,6 +113,8 @@ class CategoryController extends Controller
                 'desc' => $request->desc,
                 'type' =>$request->type,
                 'status'=>$request->status,
+                'price'=>$request->price,
+
             ]);
 
             if ($request->hasFile('photo'))

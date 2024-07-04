@@ -17,7 +17,7 @@ use App\Http\Controllers\WorksController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
-const pag=50;
+const pag=5;
 //Route::post('test/add',[TestController::class,'add']);
 //Route::get('test/show',[TestController::class,'show']);
 //Route::get('test/edit/{id}',[TestController::class,'edit']);
@@ -68,6 +68,7 @@ Route::group(['prefix'=>'superAdmin'],function (){
         Route::post('update/{id}',[AdminAuthController::class,'update']);
         Route::get('delete/{id}',[AdminAuthController::class,'delete']);
         Route::post('login',[AdminAuthController::class,'login']);
+        Route::post('forgetPassword',[AdminAuthController::class,'forgetPassword']);
     });
 
     Route::group(['prefix'=>'job'],function (){

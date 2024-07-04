@@ -91,9 +91,9 @@ class AdminAuthController extends Controller
             //////////////// validation ////////////////////
             $rules = [
                 'name' => 'required',
-                'email' => 'required|unique:users',
+                'email' => 'required',
                 'phone' => 'required',
-                'password'=>'required',
+//                'password'=>'required',
                 'type'=>'required'
             ];
             $validator = Validator::make($request->all(), $rules);
@@ -114,7 +114,7 @@ class AdminAuthController extends Controller
                     'name'=> $request->name,
                     'email'=> $request->email,
                     'phone'=> $request->phone,
-                    'password'=>bcrypt($request->password),
+//                    'password'=>bcrypt($request->password),
                     'type'=>$request->type,
 
             ]);
@@ -170,6 +170,27 @@ class AdminAuthController extends Controller
             $user=Auth::guard('user-api')->user();
             $user->api_token=$token;
             return $this->ReturnData('user',$user,'login successfully');
+
+        }
+        catch (\Exception $ex){
+            return $this->ReturnError($ex->getCode(),$ex->getCode());
+        }
+    }
+
+    public function forgetPassword(Request $request)
+    {
+        try
+        {
+            $email=$request->email;
+            $user=User::where('email',$email)->first();
+            if (!$user){
+                return $this->ReturnError('E001','Not found This user');
+            }
+            $user->where('email',$email)->update([
+               'password'=>bcrypt($request->password),
+            ]);
+            return $this->ReturnSuccess('200','updated successfully');
+
 
         }
         catch (\Exception $ex){
