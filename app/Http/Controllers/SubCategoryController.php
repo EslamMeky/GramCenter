@@ -44,7 +44,7 @@ class SubCategoryController extends Controller
     public function show()
     {
         try {
-            $subCategory= SubCategory::selection()->paginate(pag);
+            $subCategory= SubCategory::with('category')->selection()->paginate(pag);
             return $this->ReturnData('subCategory',$subCategory,'200');
         }
         catch (\Exception $ex)
@@ -132,7 +132,7 @@ class SubCategoryController extends Controller
         try
         {
          $category=SubCategory::with(['category'=>function($q){
-             $q->select('id','name','desc');
+             $q->select('id','name','desc','type','price');
          }])->where('category_id',$id)->get();
          return $this->ReturnData('category',$category,'200');
         }

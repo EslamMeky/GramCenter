@@ -49,6 +49,8 @@ Route::group(['prefix'=>'superAdmin'],function (){
         Route::post('update/{id}',[CategoryController::class,'update']);
         Route::get('delete/{id}',[CategoryController::class,'delete']);
         Route::post('updateStatus/{id}',[CategoryController::class,'updateStatus']);
+        Route::get('showMakeup',[CategoryController::class,'showMakeup']);
+        Route::get('showStudio',[CategoryController::class,'showStudio']);
 
     });
 
@@ -119,6 +121,8 @@ Route::group(['prefix'=>'superAdmin'],function (){
         Route::get('edit/{id}',[MackupController::class,'edit']);
         Route::post('update/{id}',[MackupController::class,'update']);
         Route::get('delete/{id}',[MackupController::class,'delete']);
+
+
     });
 
     Route::group(['prefix'=>'studio'],function (){

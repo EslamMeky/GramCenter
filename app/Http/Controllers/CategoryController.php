@@ -175,4 +175,26 @@ class CategoryController extends Controller
             return $this->ReturnError($ex->getCode(),$ex->getCode());
         }
     }
+
+    public function showMakeup(){
+        try {
+            $makeup= Category::selection()->where('type','ميكاب')->paginate(pag);
+            return $this->ReturnData('makeup',$makeup,'200');
+        }
+        catch (\Exception $ex)
+        {
+            return $this->ReturnError($ex->getCode(),$ex->getCode());
+        }
+    }
+
+    public function showStudio(){
+        try {
+            $makeup= Category::selection()->where('type','استوديو')->paginate(pag);
+            return $this->ReturnData('makeup',$makeup,'200');
+        }
+        catch (\Exception $ex)
+        {
+            return $this->ReturnError($ex->getCode(),$ex->getCode());
+        }
+    }
 }
