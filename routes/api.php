@@ -9,6 +9,7 @@ use App\Http\Controllers\ExpenseController;
 use App\Http\Controllers\LoansController;
 use App\Http\Controllers\MackupController;
 use App\Http\Controllers\RentsController;
+use App\Http\Controllers\SearchController;
 use App\Http\Controllers\StudioController;
 use App\Http\Controllers\SubCategoryController;
 use App\Http\Controllers\TestController;
@@ -144,6 +145,21 @@ Route::group(['prefix'=>'superAdmin'],function (){
 //        Route::get('delete/{id}',[DailyController::class,'delete']);
     });
 
+
+    Route::group(['prefix'=>'search'],function (){
+
+        Route::get('SearchExpense',[SearchController::class,'SearchExpense']);
+        Route::get('SearchLoans',[SearchController::class,'SearchLoans']);
+        Route::get('SearchAdmin',[SearchController::class,'SearchAdmin']);
+        Route::get('SearchEmployee',[SearchController::class,'SearchEmployee']);
+        Route::get('SearchJob',[SearchController::class,'SearchJob']);
+        Route::get('SearchDiscount',[SearchController::class,'SearchDiscount']);
+        Route::get('SearchCategory',[SearchController::class,'SearchCategory']);
+        Route::get('SearchSubCategory',[SearchController::class,'SearchSubCategory']);
+
+
+
+    });
 
 });
 

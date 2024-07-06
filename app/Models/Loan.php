@@ -9,6 +9,7 @@ class Loan extends Model
 {
     use HasFactory; protected $table='loans';
     protected $fillable=[
+        'id',
         'employee_name',
         'reason',
         'price',
@@ -20,6 +21,7 @@ class Loan extends Model
 
     public function scopeSelection($q){
         return $q->select([
+            'id',
             'employee_name',
             'reason',
             'price',

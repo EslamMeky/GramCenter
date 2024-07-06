@@ -10,6 +10,7 @@ class Expense extends Model
     use HasFactory;
     protected $table='expenses';
     protected $fillable=[
+        'id',
         'side',
         'reason',
         'price',
@@ -21,6 +22,7 @@ class Expense extends Model
 
     public function scopeSelection($q){
         return $q->select([
+            'id',
             'side',
             'reason',
             'price',
