@@ -47,7 +47,9 @@ class MackupController extends Controller
                     'reason_discount' =>$request->reason_discount,
                     'price'=>$request->price,
                     'status' =>' تم الدفع',
-                    'arrive' =>'لم يتم الوصول',
+                    'arrive' =>$request->arrive,
+                    'addService'=>$request->addService,
+                    'priceService'=>$request->priceService,
                 ]);
                 return $this->ReturnSuccess('200','Save Successfully');
 
@@ -67,7 +69,9 @@ class MackupController extends Controller
                     'reason_discount' =>$request->reason_discount,
                     'price'=>$request->price,
                     'status' =>'لم يتم الدفع',
-                    'arrive' =>'لم يتم الوصول',
+                    'arrive' =>$request->arrive,
+                    'addService'=>$request->addService,
+                    'priceService'=>$request->priceService,
                 ]);
                 return $this->ReturnSuccess('200','Save Successfully');
 
@@ -75,8 +79,8 @@ class MackupController extends Controller
         }
         catch (\Exception $ex)
         {
-            return $this->ReturnError($ex->getCode(),$ex->getCode());
-//            return $ex;
+//            return $this->ReturnError($ex->getCode(),$ex->getCode());
+            return $ex;
         }
 
     }
@@ -156,6 +160,9 @@ class MackupController extends Controller
                     'status' =>'تم الدفع',
                     'enter'=>$request->enter,
                     'exit'=>$request->exit,
+                    'arrive' =>$request->arrive,
+                    'addService'=>$request->addService,
+                    'priceService'=>$request->priceService,
                 ]);
                 return $this->ReturnSuccess('200','Updated Successfully');
             }
@@ -175,6 +182,9 @@ class MackupController extends Controller
                     'status' =>'لم تم الدفع',
                     'enter'=>$request->enter,
                     'exit'=>$request->exit,
+                    'arrive' =>$request->arrive,
+                    'addService'=>$request->addService,
+                    'priceService'=>$request->priceService,
                 ]);
                 return $this->ReturnSuccess('200','Updated Successfully');
             } }

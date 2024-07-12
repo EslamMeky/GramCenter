@@ -17,6 +17,8 @@ return new class extends Migration
             $table->id();
             $table->integer('category_id');
             $table->text('notes')->nullable();
+            $table->text('addService')->nullable();
+            $table->integer('priceService')->nullable();
             $table->string('name');
             $table->string('phone');
             $table->string('address');
@@ -29,7 +31,7 @@ return new class extends Migration
             $table->time('enter')->nullable();
             $table->time('exit')->nullable();
             $table->string('status');
-            $table->string('arrive');
+            $table->time('arrive')->nullable();
             $table->timestamps();
         });
     }
