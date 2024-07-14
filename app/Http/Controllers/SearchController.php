@@ -8,6 +8,7 @@ use App\Models\Discount;
 use App\Models\Employee;
 use App\Models\Expense;
 use App\Models\Loan;
+use App\Models\Studio;
 use App\Models\SubCategory;
 use App\Models\TheJob;
 use App\Models\User;
@@ -182,6 +183,27 @@ class SearchController extends Controller
 
             }
             return$this->ReturnData('subCategory',$subCategory,'done search');
+
+        }
+        catch (\Exception $ex){
+            return $this->ReturnError($ex->getCode(),$ex->getCode());
+        }
+    }
+
+    public function SearchStudio(Request $request)
+    {
+        try
+        {
+            $search = $request->search;
+
+            $studio = Studio::where('name','LIKE',"%$search%")->get();
+//                ->orWhere('lname','LIKE',"%$search%")->get();
+            if ($studio -> isEmpty())
+            {
+                return $this->ReturnData('studio',$studio,'Not Found');
+
+            }
+            return$this->ReturnData('studio',$studio,'done search');
 
         }
         catch (\Exception $ex){

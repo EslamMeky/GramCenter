@@ -46,7 +46,9 @@ class StudioController extends Controller
                 'reason_discount' =>$request->reason_discount,
                 'price'=>$request->price,
                 'status' =>' تم الدفع',
-                'arrive' =>'لم يتم الوصول',
+                'arrive' =>$request->arrive,
+                'addService'=>$request->addService,
+                'priceService'=>$request->priceService,
             ]);
                return $this->ReturnSuccess('200','Save Successfully');
 
@@ -66,7 +68,9 @@ class StudioController extends Controller
                    'reason_discount' =>$request->reason_discount,
                    'price'=>$request->price,
                    'status' =>'لم يتم الدفع',
-                   'arrive' =>'لم يتم الوصول',
+                   'arrive' =>$request->arrive,
+                   'addService'=>$request->addService,
+                   'priceService'=>$request->priceService,
                ]);
                return $this->ReturnSuccess('200','Save Successfully');
 
@@ -155,6 +159,9 @@ class StudioController extends Controller
                 'status' =>'تم الدفع',
                 'enter'=>$request->enter,
                 'exit'=>$request->exit,
+                'arrive' =>$request->arrive,
+                'addService'=>$request->addService,
+                'priceService'=>$request->priceService,
             ]);
             return $this->ReturnSuccess('200','Updated Successfully');
         }
@@ -174,6 +181,9 @@ class StudioController extends Controller
                     'status' =>'لم تم الدفع',
                     'enter'=>$request->enter,
                     'exit'=>$request->exit,
+                    'arrive' =>$request->arrive,
+                    'addService'=>$request->addService,
+                    'priceService'=>$request->priceService,
                 ]);
                 return $this->ReturnSuccess('200','Updated Successfully');
             }

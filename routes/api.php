@@ -158,6 +158,7 @@ Route::group(['prefix'=>'superAdmin'],function (){
         Route::get('SearchDiscount',[SearchController::class,'SearchDiscount']);
         Route::get('SearchCategory',[SearchController::class,'SearchCategory']);
         Route::get('SearchSubCategory',[SearchController::class,'SearchSubCategory']);
+        Route::get('SearchStudio',[SearchController::class,'SearchStudio']);
 
 
 
