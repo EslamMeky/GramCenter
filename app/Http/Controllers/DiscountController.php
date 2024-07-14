@@ -122,4 +122,21 @@ class DiscountController extends Controller
             return $this->ReturnError($ex->getCode(),$ex->getCode());
         }
     }
+
+    public function getPriceDiscount($id){
+        try
+        {
+            $discount= Discount::find($id);
+            if (!$discount)
+            {
+                return $this->ReturnError('404','Not Found');
+            }
+            $discount->Selection()->where('id',$id)->get();
+            return $this->ReturnData('discount',$discount,'200');
+        }
+        catch (\Exception $ex)
+        {
+            return $this->ReturnError($ex->getCode(),$ex->getCode());
+        }
+    }
 }

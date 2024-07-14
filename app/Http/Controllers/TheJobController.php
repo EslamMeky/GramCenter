@@ -120,4 +120,8 @@ class TheJobController extends Controller
             return $this->ReturnError($ex->getCode(), $ex->getCode());
         }
     }
+
+    public function getJobPrice($id){
+        //
+    }
 }
