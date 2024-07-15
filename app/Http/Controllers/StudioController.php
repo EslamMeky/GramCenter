@@ -24,6 +24,7 @@ class StudioController extends Controller
                 'pay'=> 'required',
                 'rest'=> 'required',
                 'total'=> 'required',
+                'receivedDate'=> 'required',
             ];
             $validator = Validator::make($request->all(), $rules);
             if ($validator->fails())
@@ -49,6 +50,7 @@ class StudioController extends Controller
                 'arrive' =>$request->arrive,
                 'addService'=>$request->addService,
                 'priceService'=>$request->priceService,
+                'receivedDate'=>$request->receivedDate,
             ]);
                return $this->ReturnSuccess('200','Save Successfully');
 
@@ -71,6 +73,7 @@ class StudioController extends Controller
                    'arrive' =>$request->arrive,
                    'addService'=>$request->addService,
                    'priceService'=>$request->priceService,
+                   'receivedDate'=>$request->receivedDate,
                ]);
                return $this->ReturnSuccess('200','Save Successfully');
 
@@ -128,6 +131,7 @@ class StudioController extends Controller
                 'pay' => 'required',
                 'rest' => 'required',
                 'total' => 'required',
+                'receivedDate'=>'required'
             ];
             $validator = Validator::make($request->all(), $rules);
             if ($validator->fails())
@@ -162,6 +166,7 @@ class StudioController extends Controller
                 'arrive' =>$request->arrive,
                 'addService'=>$request->addService,
                 'priceService'=>$request->priceService,
+                'receivedDate'=>$request->receivedDate,
             ]);
             return $this->ReturnSuccess('200','Updated Successfully');
         }
@@ -184,6 +189,7 @@ class StudioController extends Controller
                     'arrive' =>$request->arrive,
                     'addService'=>$request->addService,
                     'priceService'=>$request->priceService,
+                    'receivedDate'=>$request->receivedDate,
                 ]);
                 return $this->ReturnSuccess('200','Updated Successfully');
             }
@@ -191,6 +197,7 @@ class StudioController extends Controller
         catch (\Exception $ex)
         {
             return $this->ReturnError($ex->getCode(),$ex->getCode());
+//            return $ex;
         }
     }
 

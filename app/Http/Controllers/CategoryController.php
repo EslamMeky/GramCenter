@@ -178,7 +178,7 @@ class CategoryController extends Controller
 
     public function showMakeup(){
         try {
-            $makeup= Category::selection()->where('type','ميكاب')->paginate(pag);
+            $makeup= Category::selection()->where('type','ميكاب')->get();
             return $this->ReturnData('makeup',$makeup,'200');
         }
         catch (\Exception $ex)
@@ -189,7 +189,7 @@ class CategoryController extends Controller
 
     public function showStudio(){
         try {
-            $makeup= Category::selection()->where('type','استوديو')->paginate(pag);
+            $makeup= Category::selection()->where('type','استوديو')->get();
             return $this->ReturnData('makeup',$makeup,'200');
         }
         catch (\Exception $ex)

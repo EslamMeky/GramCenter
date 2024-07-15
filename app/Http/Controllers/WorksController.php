@@ -122,4 +122,15 @@ class WorksController extends Controller
         }
     }
 
+//    public function getWorks()
+//    {
+//        try {
+//            $works= Work::with(['employee','job'])->selection()->paginate(pag);
+//            return $this->ReturnData('works',$works,'200');
+//        }
+//        catch (\Exception $ex)
+//        {
+//            return $this->ReturnError($ex->getCode(),$ex->getCode());
+//        }
+//    }
 }

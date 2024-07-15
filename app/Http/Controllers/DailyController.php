@@ -11,46 +11,6 @@ use Illuminate\Support\Carbon;
 class DailyController extends Controller
 {
     use GeneralTrait;
-    public function updateArriveMakeup($id)
-    {
-        try {
-            $makeup= Makeup::find($id);
-            if (!$makeup){
-                return $this->ReturnError('404','Not Found');
-            }
-            $status=$makeup->arrive=='لم يتم الوصول'? 'تم الوصول':'لم يتم الوصول';
-            $makeup->update(['arrive'=>$status]);
-            return $this->ReturnSuccess('200','Updated Successfully');
-
-        }
-        catch (\Exception $ex)
-        {
-            return $this->ReturnError($ex->getCode(),$ex->getCode());
-
-        }
-
-
-    }
-
-    public function updateArriveStudio($id)
-    {
-        try {
-            $studio= Studio::find($id);
-            if (!$studio){
-                return $this->ReturnError('404','Not Found');
-            }
-            $status=$studio->arrive=='لم يتم الوصول'? 'تم الوصول':'لم يتم الوصول';
-            $studio->update(['arrive'=>$status]);
-            return $this->ReturnSuccess('200','Updated Successfully');
-
-        }
-        catch (\Exception $ex)
-        {
-            return $this->ReturnError($ex->getCode(),$ex->getCode());
-
-        }
-
-    }
 
     public function updateStatusStudio($id)
     {
@@ -97,7 +57,7 @@ class DailyController extends Controller
         try
         {
             $today = Carbon::now();
-            $makeup= Makeup::with('category')->selection()->whereDate('created_at', $today)->paginate(pag);
+            $makeup= Makeup::with('category')->selection()->whereDate('appropriate', $today)->paginate(pag);
             return $this->ReturnData('makeup',$makeup,'200');
         }
         catch (\Exception $ex)
@@ -112,7 +72,7 @@ class DailyController extends Controller
         try
         {
             $today = Carbon::now();
-            $studio= Studio::with('category')->selection()->whereDate('created_at', $today)->paginate(pag);
+            $studio= Studio::with('category')->selection()->whereDate('appropriate', $today)->paginate(pag);
             return $this->ReturnData('studio',$studio,'200');
         }
         catch (\Exception $ex)

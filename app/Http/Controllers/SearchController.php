@@ -8,10 +8,13 @@ use App\Models\Discount;
 use App\Models\Employee;
 use App\Models\Expense;
 use App\Models\Loan;
+use App\Models\Makeup;
+use App\Models\Rent;
 use App\Models\Studio;
 use App\Models\SubCategory;
 use App\Models\TheJob;
 use App\Models\User;
+use App\Models\Work;
 use Illuminate\Http\Request;
 
 class SearchController extends Controller
@@ -210,4 +213,72 @@ class SearchController extends Controller
             return $this->ReturnError($ex->getCode(),$ex->getCode());
         }
     }
+
+    public function SearchMakeup(Request $request)
+    {
+        try
+        {
+            $search = $request->search;
+
+            $makeup = Makeup::where('name','LIKE',"%$search%")->get();
+//                ->orWhere('lname','LIKE',"%$search%")->get();
+            if ($makeup -> isEmpty())
+            {
+                return $this->ReturnData('makeup',$makeup,'Not Found');
+
+            }
+            return$this->ReturnData('makeup',$makeup,'done search');
+
+        }
+        catch (\Exception $ex){
+            return $this->ReturnError($ex->getCode(),$ex->getCode());
+        }
+    }
+
+    public function SearchRents(Request $request)
+    {
+        try
+        {
+            $search = $request->search;
+
+            $rent = Rent::where('name','LIKE',"%$search%")->get();
+//                ->orWhere('lname','LIKE',"%$search%")->get();
+            if ($rent -> isEmpty())
+            {
+                return $this->ReturnData('rent',$rent,'Not Found');
+
+            }
+            return$this->ReturnData('rent',$rent,'done search');
+
+        }
+        catch (\Exception $ex){
+            return $this->ReturnError($ex->getCode(),$ex->getCode());
+        }
+    }
+
+
+    public function SearchWorks(Request $request)
+    {
+        try
+        {
+            $search = $request->search;
+
+            $work = Work::with(['employee','job'])->whereHas('employee', function ($query) use ($search) {
+                $query->where('employee_name', 'LIKE', "%$search%"); // Search by category name
+            })->get();
+
+            if ($work -> isEmpty())
+            {
+                return $this->ReturnData('work',$work,'Not Found');
+
+            }
+            return$this->ReturnData('work',$work,'done search');
+
+        }
+        catch (\Exception $ex){
+            return $this->ReturnError($ex->getCode(),$ex->getCode());
+        }
+    }
+
+
 }

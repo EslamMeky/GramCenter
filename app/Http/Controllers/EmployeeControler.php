@@ -129,4 +129,16 @@ class EmployeeControler extends Controller
          return $this->ReturnError($ex->getCode(),$ex->getCode());
         }
     }
+
+    public function getEmployee()
+    {
+        try {
+            $employees= Employee::selection()->get();
+            return $this->ReturnData('employee',$employees,'200');
+        }
+        catch (\Exception $ex)
+        {
+            return $this->ReturnError($ex->getCode(),$ex->getCode());
+        }
+    }
 }

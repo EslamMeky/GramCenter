@@ -23,6 +23,7 @@ return new class extends Migration
             $table->string('phone');
             $table->string('address');
             $table->date('appropriate');
+            $table->date('receivedDate');
             $table->integer('pay');
             $table->integer('rest');
             $table->integer('total');

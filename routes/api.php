@@ -19,11 +19,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 const pag=5;
-//Route::post('test/add',[TestController::class,'add']);
-//Route::get('test/show',[TestController::class,'show']);
-//Route::get('test/edit/{id}',[TestController::class,'edit']);
-//Route::post('test/update/{id}',[TestController::class,'update']);
-//Route::get('test/delete/{id}',[TestController::class,'delete']);
+
 
 Route::group(['prefix'=>'superAdmin'],function (){
 
@@ -33,6 +29,8 @@ Route::group(['prefix'=>'superAdmin'],function (){
         Route::get('edit/{id}',[EmployeeControler::class,'edit']);
         Route::post('update/{id}',[EmployeeControler::class,'update']);
         Route::get('delete/{id}',[EmployeeControler::class,'delete']);
+        Route::get('getEmployee',[EmployeeControler::class,'getEmployee']);
+
     });
 
     Route::group(['prefix'=>'discount'],function (){
@@ -42,6 +40,8 @@ Route::group(['prefix'=>'superAdmin'],function (){
         Route::post('update/{id}',[DiscountController::class,'update']);
         Route::get('delete/{id}',[DiscountController::class,'delete']);
         Route::get('getPriceDiscount/{id}',[DiscountController::class,'getPriceDiscount']);
+        Route::get('getDiscount',[DiscountController::class,'getDiscount']);
+
 
     });
 
@@ -64,6 +64,8 @@ Route::group(['prefix'=>'superAdmin'],function (){
         Route::post('update/{id}',[SubCategoryController::class,'update']);
         Route::get('delete/{id}',[SubCategoryController::class,'delete']);
         Route::get('getCategory/{id}',[SubCategoryController::class,'getCategory']);
+        Route::get('getSubCategory',[SubCategoryController::class,'getSubCategory']);
+
     });
 
     Route::group(['prefix'=>'admin','middleware'=>'api'],function (){
@@ -82,6 +84,9 @@ Route::group(['prefix'=>'superAdmin'],function (){
         Route::get('edit/{id}',[TheJobController::class,'edit']);
         Route::post('update/{id}',[TheJobController::class,'update']);
         Route::get('delete/{id}',[TheJobController::class,'delete']);
+        Route::get('getJobs',[TheJobController::class,'getJobs']);
+        Route::get('getJobPrice/{id}',[TheJobController::class,'getJobPrice']);
+
     });
 
 
@@ -91,6 +96,8 @@ Route::group(['prefix'=>'superAdmin'],function (){
         Route::get('edit/{id}',[WorksController::class,'edit']);
         Route::post('update/{id}',[WorksController::class,'update']);
         Route::get('delete/{id}',[WorksController::class,'delete']);
+
+
     });
 
     Route::group(['prefix'=>'rent'],function (){
@@ -137,8 +144,8 @@ Route::group(['prefix'=>'superAdmin'],function (){
     });
 
     Route::group(['prefix'=>'daily'],function (){
-        Route::post('updateArriveMakeup/{id}',[DailyController::class,'updateArriveMakeup']);
-        Route::post('updateArriveStudio/{id}',[DailyController::class,'updateArriveStudio']);
+//        Route::post('updateArriveMakeup/{id}',[DailyController::class,'updateArriveMakeup']);
+//        Route::post('updateArriveStudio/{id}',[DailyController::class,'updateArriveStudio']);
         Route::post('updateStatusMakeup/{id}',[DailyController::class,'updateStatusMakeup']);
         Route::post('updateStatusStudio/{id}',[DailyController::class,'updateStatusStudio']);
         Route::get('showMakeup',[DailyController::class,'showMakeup']);
@@ -159,6 +166,9 @@ Route::group(['prefix'=>'superAdmin'],function (){
         Route::get('SearchCategory',[SearchController::class,'SearchCategory']);
         Route::get('SearchSubCategory',[SearchController::class,'SearchSubCategory']);
         Route::get('SearchStudio',[SearchController::class,'SearchStudio']);
+        Route::get('SearchMakeup',[SearchController::class,'SearchMakeup']);
+        Route::get('SearchRents',[SearchController::class,'SearchRents']);
+        Route::get('SearchWorks',[SearchController::class,'SearchWorks']);
 
 
 

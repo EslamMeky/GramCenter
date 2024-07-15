@@ -141,4 +141,16 @@ class SubCategoryController extends Controller
             return $this->ReturnError($ex->getCode(),$ex->getCode());
         }
     }
+
+    public function getSubCategory()
+    {
+        try {
+            $subCategory= SubCategory::with('category')->selection()->get();
+            return $this->ReturnData('subCategory',$subCategory,'200');
+        }
+        catch (\Exception $ex)
+        {
+            return $this->ReturnError($ex->getCode(),$ex->getCode());
+        }
+    }
 }

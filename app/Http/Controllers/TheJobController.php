@@ -121,7 +121,32 @@ class TheJobController extends Controller
         }
     }
 
-    public function getJobPrice($id){
-        //
+
+    public function getJobs()
+    {
+        try {
+            $jobs= TheJob::selection()->get();
+            return $this->ReturnData('jobs',$jobs,'200');
+        }
+        catch (\Exception $ex)
+        {
+            return $this->ReturnError($ex->getCode(),$ex->getCode());
+        }
     }
+    public function getJobPrice($id)
+    {
+        try {
+            $job = TheJob::find($id);
+            if (!$job) {
+                return $this->ReturnError('404', 'Not Found');
+            }
+            $job->where('id',$id)->get();
+            return $this->ReturnData('job',$job,'200');
+        }
+        catch (\Exception $ex)
+        {
+            return $this->ReturnError($ex->getCode(),$ex->getCode());
+        }
+    }
+
 }
