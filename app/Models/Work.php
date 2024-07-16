@@ -12,7 +12,8 @@ class Work extends Model
     protected $fillable=[
       'id',
       'employee_name_id',
-      'job_id',
+      'job',
+      'total',
       'created_at',
       'updated_at'
     ];
@@ -21,7 +22,8 @@ class Work extends Model
         return $q->select([
             'id',
             'employee_name_id',
-            'job_id',
+            'job',
+            'total',
             'created_at',
             'updated_at'
         ]);
@@ -31,9 +33,9 @@ class Work extends Model
         return $this->belongsTo(Employee::class,'employee_name_id','id');
     }
 
-    public function job()
-    {
-        return $this->belongsTo(TheJob::class,'job_id','id');
-    }
+//    public function job()
+//    {
+//        return $this->belongsTo(TheJob::class,'job_id','id');
+//    }
 
 }

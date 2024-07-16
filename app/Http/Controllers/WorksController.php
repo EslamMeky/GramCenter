@@ -17,7 +17,8 @@ class WorksController extends Controller
             ///////////// validation ///////////////
             $rules = [
                 'employee_name_id' => 'required',
-                'job_id' => 'required',
+                'job' =>'required',
+                'total' => 'required',
 
             ];
             $validator = Validator::make($request->all(), $rules);
@@ -29,7 +30,8 @@ class WorksController extends Controller
             ////////////////////  save  ///////////////////
             Work::create([
                 'employee_name_id'=> $request->employee_name_id,
-                'job_id'=> $request->job_id,
+                'job' =>$request->job,
+                'total' => $request->total,
 
             ]);
             return $this->ReturnSuccess('200','Save Successfully');
@@ -43,7 +45,7 @@ class WorksController extends Controller
     public function show()
     {
         try {
-            $works= Work::with(['employee','job'])->selection()->paginate(pag);
+            $works= Work::with(['employee'])->selection()->paginate(pag);
             return $this->ReturnData('works',$works,'200');
         }
         catch (\Exception $ex)
@@ -61,7 +63,7 @@ class WorksController extends Controller
             {
                 return $this->ReturnError('404','Not Found');
             }
-            $work= Work::with(['employee','job'])->Selection()->where('id',$id)->get();
+            $work= Work::with(['employee'])->Selection()->where('id',$id)->get();
             return $this->ReturnData('work',$work,'200');
         }
         catch (\Exception $ex)
@@ -77,7 +79,8 @@ class WorksController extends Controller
             //////////////// validation ////////////////////
             $rules = [
                 'employee_name_id' => 'required',
-                'job_id' => 'required',
+                'job' =>'required',
+                'total' => 'required',
 
             ];
             $validator = Validator::make($request->all(), $rules);
@@ -95,7 +98,8 @@ class WorksController extends Controller
             }
             $work->where('id',$id)->update([
                 'employee_name_id' => $request->employee_name_id,
-                'job_id' => $request->job_id,
+                'job' =>$request->job,
+                'total' => $request->total,
 
 
             ]);

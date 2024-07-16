@@ -16,7 +16,8 @@ return new class extends Migration
         Schema::create('works', function (Blueprint $table) {
             $table->id();
             $table->integer('employee_name_id');
-            $table->integer('job_id');
+            $table->text('job');
+            $table->integer('total');
             $table->timestamps();
         });
     }
