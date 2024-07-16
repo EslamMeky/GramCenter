@@ -85,7 +85,7 @@ Route::group(['prefix'=>'superAdmin'],function (){
         Route::post('update/{id}',[TheJobController::class,'update']);
         Route::get('delete/{id}',[TheJobController::class,'delete']);
         Route::get('getJobs',[TheJobController::class,'getJobs']);
-        Route::get('getJobPrice/{id}',[TheJobController::class,'getJobPrice']);
+        Route::get('getJobPrice/{name}',[TheJobController::class,'getJobPrice']);
 
     });
 

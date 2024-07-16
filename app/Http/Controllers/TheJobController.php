@@ -16,7 +16,7 @@ class TheJobController extends Controller
         {
             ///////////// validation ///////////////
             $rules = [
-                'name' => 'required',
+                'name' => 'required|unique:the_jobs',
                 'price' => 'required'
 
             ];
@@ -37,6 +37,7 @@ class TheJobController extends Controller
         catch (\Exception $ex)
         {
             return $this->ReturnError($ex->getCode(),$ex->getCode());
+//            return $ex;
         }
     }
 
@@ -133,14 +134,19 @@ class TheJobController extends Controller
             return $this->ReturnError($ex->getCode(),$ex->getCode());
         }
     }
-    public function getJobPrice($id)
+    public function getJobPrice($name)
     {
         try {
-            $job = TheJob::find($id);
-            if (!$job) {
-                return $this->ReturnError('404', 'Not Found');
+//            $job = TheJob::find($name);
+//            if (!$job) {
+//                return $this->ReturnError('404', 'Not Found');
+//            }
+            $job=TheJob::selection()->where('name',$name)->get();
+            if ($job -> isEmpty())
+            {
+                return $this->ReturnData('job',$job,'Not Found');
+
             }
-            $job->where('id',$id)->get();
             return $this->ReturnData('job',$job,'200');
         }
         catch (\Exception $ex)
