@@ -151,4 +151,30 @@ class DiscountController extends Controller
             return $this->ReturnError($ex->getCode(),$ex->getCode());
         }
     }
+
+    public function getPrice(Request $request)
+    {
+        try {
+            // افترض أن المعرّفات يتم إرسالها كمصفوفة في الطلب
+            $ids = $request->ids;
+
+            if (!is_array($ids) || empty($ids)) {
+                return $this->ReturnError('400', 'No valid IDs provided');
+            }
+
+            // جلب التخفيضات بناءً على المعرّفات
+            $discounts = Discount::whereIn('id',$ids)->get();
+
+            if ($discounts->isEmpty()) {
+                return $this->ReturnError('404', 'No discounts found for the provided IDs');
+            }
+
+            // حساب مجموع الأسعار
+            $totalPrice = $discounts->sum('price'); // تأكد من أن 'price' هو العمود الصحيح
+
+            return $this->ReturnData('totalPrice', $totalPrice, '200');
+        } catch (\Exception $ex) {
+            return $this->ReturnError($ex->getCode(), $ex->getMessage());
+        }
+    }
 }

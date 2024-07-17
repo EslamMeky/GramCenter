@@ -41,6 +41,7 @@ Route::group(['prefix'=>'superAdmin'],function (){
         Route::get('delete/{id}',[DiscountController::class,'delete']);
         Route::get('getPriceDiscount/{id}',[DiscountController::class,'getPriceDiscount']);
         Route::get('getDiscount',[DiscountController::class,'getDiscount']);
+        Route::get('getPrice',[DiscountController::class,'getPrice']);
 
 
     });

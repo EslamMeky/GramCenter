@@ -26,7 +26,7 @@ return new class extends Migration
             $table->integer('pay');
             $table->integer('rest');
             $table->integer('total');
-            $table->string('reason_discount')->nullable();
+            $table->integer('reason_discount_id')->nullable();
             $table->integer('price')->nullable();
             $table->time('enter')->nullable();
             $table->time('exit')->nullable();

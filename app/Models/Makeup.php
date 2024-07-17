@@ -22,7 +22,7 @@ class Makeup extends Model
       'pay',
       'rest',
       'total',
-      'reason_discount',
+      'reason_discount_id',
       'price',
       'enter',
       'exit',
@@ -49,7 +49,7 @@ class Makeup extends Model
          'pay',
          'rest',
          'total',
-         'reason_discount',
+         'reason_discount_id',
          'price',
          'enter',
          'exit',
@@ -62,6 +62,10 @@ class Makeup extends Model
 
     public function category(){
         return $this->belongsTo(Category::class,'category_id','id');
+    }
+
+    public function discount(){
+        return $this->belongsTo(Discount::class,'reason_discount_id','id');
     }
 
 }

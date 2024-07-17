@@ -44,7 +44,7 @@ class MackupController extends Controller
                     'pay' => $request ->pay,
                     'rest' => $request ->rest,
                     'total' => $request ->total,
-                    'reason_discount' =>$request->reason_discount,
+                    'reason_discount_id' =>$request->reason_discount_id,
                     'price'=>$request->price,
                     'status' =>' تم الدفع',
                     'arrive' =>$request->arrive,
@@ -66,7 +66,7 @@ class MackupController extends Controller
                     'pay' => $request ->pay,
                     'rest' => $request ->rest,
                     'total' => $request ->total,
-                    'reason_discount' =>$request->reason_discount,
+                    'reason_discount_id' =>$request->reason_discount_id,
                     'price'=>$request->price,
                     'status' =>'لم يتم الدفع',
                     'arrive' =>$request->arrive,
@@ -88,7 +88,7 @@ class MackupController extends Controller
     public function show()
     {
         try {
-            $makeups= Makeup::with('category')->selection()->paginate(pag);
+            $makeups= Makeup::with(['category','discount'])->selection()->paginate(pag);
             return $this->ReturnData('makeups',$makeups,'200');
         }
         catch (\Exception $ex)
@@ -106,7 +106,7 @@ class MackupController extends Controller
             {
                 return $this->ReturnError('404','Not Found');
             }
-            $makeup=Studio::with('category')->Selection()->where('id',$id)->get();
+            $makeup=Studio::with(['category','discount'])->Selection()->where('id',$id)->get();
             return $this->ReturnData('makeups',$makeup,'200');
         }
         catch (\Exception $ex)
@@ -155,7 +155,7 @@ class MackupController extends Controller
                     'pay' => $request ->pay,
                     'rest' => $request ->rest,
                     'total' => $request ->total,
-                    'reason_discount' =>$request->reason_discount,
+                    'reason_discount_id' =>$request->reason_discount_id,
                     'price' =>$request->price,
                     'status' =>'تم الدفع',
                     'enter'=>$request->enter,
@@ -177,7 +177,7 @@ class MackupController extends Controller
                     'pay' => $request ->pay,
                     'rest' => $request ->rest,
                     'total' => $request ->total,
-                    'reason_discount' =>$request->reason_discount,
+                    'reason_discount_id' =>$request->reason_discount_id,
                     'price' =>$request->price,
                     'status' =>'لم تم الدفع',
                     'enter'=>$request->enter,
