@@ -199,7 +199,7 @@ class SearchController extends Controller
         {
             $search = $request->search;
 
-            $studio = Studio::where('name','LIKE',"%$search%")->get();
+            $studio = Studio::with(['category','discount'])->where('name','LIKE',"%$search%")->get();
 //                ->orWhere('lname','LIKE',"%$search%")->get();
             if ($studio -> isEmpty())
             {
@@ -220,7 +220,7 @@ class SearchController extends Controller
         {
             $search = $request->search;
 
-            $makeup = Makeup::where('name','LIKE',"%$search%")->get();
+            $makeup = Makeup::with(['category','discount'])->where('name','LIKE',"%$search%")->get();
 //                ->orWhere('lname','LIKE',"%$search%")->get();
             if ($makeup -> isEmpty())
             {
