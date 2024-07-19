@@ -165,8 +165,7 @@ class ReportsController extends Controller
             $dateEnd = $request->dateEnd;
 
 
-            $expense = Expense::with(['category', 'discount'])
-                ->whereBetween('created_at', [$dateStart, $dateEnd])
+            $expense = Expense::whereBetween('created_at', [$dateStart, $dateEnd])
                 ->get();
 
             if ($expense->isEmpty())
@@ -212,8 +211,7 @@ class ReportsController extends Controller
             $dateStart = $request->dateStart;
             $dateEnd = $request->dateEnd;
 
-            $loan = Loan::with(['category', 'discount'])
-                ->whereBetween('created_at', [$dateStart , $dateEnd ])
+            $loan = Loan::whereBetween('created_at', [$dateStart , $dateEnd ])
                 ->get();
 
             if ($loan->isEmpty())
@@ -225,8 +223,8 @@ class ReportsController extends Controller
         }
         catch (\Exception $ex)
         {
-            return $this->ReturnError($ex->getCode(),$ex->getCode());
-
+//            return $this->ReturnError($ex->getCode(),$ex->getCode());
+return $ex;
         }
     }
 
