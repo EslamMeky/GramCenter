@@ -183,7 +183,7 @@ class StudioController extends Controller
                     'total' => $request ->total,
                     'reason_discount_id' =>$request->reason_discount_id,
                     'price' =>$request->price,
-                    'status' =>'لم تم الدفع',
+                    'status' =>'لم يتم الدفع',
                     'enter'=>$request->enter,
                     'exit'=>$request->exit,
                     'arrive' =>$request->arrive,

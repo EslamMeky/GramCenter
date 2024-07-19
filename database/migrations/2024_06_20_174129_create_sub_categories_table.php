@@ -13,12 +13,15 @@ return new class extends Migration
      */
     public function up()
     {
+        Schema::dropIfExists('sub_categories');
         Schema::create('sub_categories', function (Blueprint $table) {
             $table->id();
-            $table->integer('category_id');
+            $table->unsignedBigInteger('category_id'); // تأكد من استخدام النوع الصحيح
             $table->string('item');
             $table->integer('price');
             $table->timestamps();
+            $table->foreign('category_id')->references('id')->on('categories')->onDelete('cascade');
+
         });
     }
 
