@@ -178,9 +178,16 @@ Route::group(['prefix'=>'superAdmin'],function (){
     Route::group(['prefix'=>'reports'],function (){
 
         Route::get('makeupReports',[ReportsController::class,'makeupReports']);
-        Route::get('makeupSearchReports',[ReportsController::class,'makeupSearchReports']);
+        Route::post('makeupSearchReports',[ReportsController::class,'makeupSearchReports']);
+
         Route::get('studioReports',[ReportsController::class,'studioReports']);
-        Route::get('studioSearchReports',[ReportsController::class,'studioSearchReports']);
+        Route::post('studioSearchReports',[ReportsController::class,'studioSearchReports']);
+
+        Route::get('ExpenseReports',[ReportsController::class,'ExpenseReports']);
+        Route::post('SearchExpenseReports',[ReportsController::class,'SearchExpenseReports']);
+
+        Route::get('LoansReports',[ReportsController::class,'LoansReports']);
+        Route::post('SearchLoansReports',[ReportsController::class,'SearchLoansReports']);
 
 
     });

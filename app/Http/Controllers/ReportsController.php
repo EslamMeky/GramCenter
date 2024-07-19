@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Http\Traits\GeneralTrait;
+use App\Models\Expense;
+use App\Models\Loan;
 use App\Models\Makeup;
 use App\Models\Studio;
 use Illuminate\Http\Request;
@@ -121,5 +123,111 @@ class ReportsController extends Controller
 
         }
     }
+
+    public function ExpenseReports()
+    {
+        try
+        {
+            $today = Carbon::now();
+            $currentMonth = $today->month;
+            $currentYear = $today->year;
+
+            $expense = Expense::selection()
+                ->whereMonth('created_at', $currentMonth)
+                ->whereYear('created_at', $currentYear)
+                ->paginate(pag);
+
+            return $this->ReturnData('expense', $expense, '200');
+        }
+        catch (\Exception $ex)
+        {
+            return $this->ReturnError($ex->getCode(),$ex->getCode());
+
+        }
+    }
+    public function SearchExpenseReports(Request $request)
+    {
+        try
+        {
+            // التحقق من أن المصفوفة تحتوي على تاريخين
+            if (!isset($request->dates[0]) || !isset($request->dates[1])) {
+                throw new \Exception('تاريخ البدء أو الانتهاء مفقود.');
+            }
+
+            $dateStart = $request->dates[0];
+            $dateEnd = $request->dates[1];
+
+            // تأكد من تنسيق التواريخ بشكل صحيح
+            $expense = Expense::with(['category', 'discount'])
+                ->whereBetween('created_at', [$dateStart . ' 00:00:00', $dateEnd . ' 23:59:59'])
+                ->get();
+
+            if ($expense->isEmpty())
+            {
+                return $this->ReturnData('expense', $expense, 'Not Found');
+            }
+
+            return $this->ReturnData('expense', $expense, 'Done search');
+        }
+        catch (\Exception $ex)
+        {
+            return $this->ReturnError($ex->getCode(),$ex->getCode());
+
+        }
+    }
+
+    public function LoansReports()
+    {
+        try
+        {
+            $today = Carbon::now();
+            $currentMonth = $today->month;
+            $currentYear = $today->year;
+
+            $loan = Loan::selection()
+                ->whereMonth('created_at', $currentMonth)
+                ->whereYear('created_at', $currentYear)
+                ->paginate(pag);
+
+            return $this->ReturnData('loan', $loan, '200');
+        }
+        catch (\Exception $ex)
+        {
+            return $this->ReturnError($ex->getCode(),$ex->getCode());
+
+        }
+    }
+
+    public function SearchLoansReports(Request $request)
+    {
+        try
+        {
+            // التحقق من أن المصفوفة تحتوي على تاريخين
+            if (!isset($request->dates[0]) || !isset($request->dates[1])) {
+                throw new \Exception('تاريخ البدء أو الانتهاء مفقود.');
+            }
+
+            $dateStart = $request->dates[0];
+            $dateEnd = $request->dates[1];
+
+            // تأكد من تنسيق التواريخ بشكل صحيح
+            $loan = Loan::with(['category', 'discount'])
+                ->whereBetween('created_at', [$dateStart . ' 00:00:00', $dateEnd . ' 23:59:59'])
+                ->get();
+
+            if ($loan->isEmpty())
+            {
+                return $this->ReturnData('loan', $loan, 'Not Found');
+            }
+
+            return $this->ReturnData('loan', $loan, 'Done search');
+        }
+        catch (\Exception $ex)
+        {
+            return $this->ReturnError($ex->getCode(),$ex->getCode());
+
+        }
+    }
+
 
 }
