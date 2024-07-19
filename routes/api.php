@@ -9,6 +9,7 @@ use App\Http\Controllers\ExpenseController;
 use App\Http\Controllers\LoansController;
 use App\Http\Controllers\MackupController;
 use App\Http\Controllers\RentsController;
+use App\Http\Controllers\ReportsController;
 use App\Http\Controllers\SearchController;
 use App\Http\Controllers\StudioController;
 use App\Http\Controllers\SubCategoryController;
@@ -171,6 +172,15 @@ Route::group(['prefix'=>'superAdmin'],function (){
         Route::get('SearchRents',[SearchController::class,'SearchRents']);
         Route::get('SearchWorks',[SearchController::class,'SearchWorks']);
 
+    });
+
+
+    Route::group(['prefix'=>'reports'],function (){
+
+        Route::get('makeupReports',[ReportsController::class,'makeupReports']);
+        Route::get('makeupSearchReports',[ReportsController::class,'makeupSearchReports']);
+        Route::get('studioReports',[ReportsController::class,'studioReports']);
+        Route::get('studioSearchReports',[ReportsController::class,'studioSearchReports']);
 
 
     });

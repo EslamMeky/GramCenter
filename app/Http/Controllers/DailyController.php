@@ -57,7 +57,7 @@ class DailyController extends Controller
         try
         {
             $today = Carbon::now();
-            $makeup= Makeup::with('category')->selection()->whereDate('appropriate', $today)->paginate(pag);
+            $makeup= Makeup::with(['category','discount'])->selection()->whereDate('appropriate', $today)->paginate(pag);
             return $this->ReturnData('makeup',$makeup,'200');
         }
         catch (\Exception $ex)
@@ -72,7 +72,7 @@ class DailyController extends Controller
         try
         {
             $today = Carbon::now();
-            $studio= Studio::with('category')->selection()->whereDate('appropriate', $today)->paginate(pag);
+            $studio= Studio::with(['category','discount'])->selection()->whereDate('appropriate', $today)->paginate(pag);
             return $this->ReturnData('studio',$studio,'200');
         }
         catch (\Exception $ex)
