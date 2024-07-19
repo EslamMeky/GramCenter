@@ -43,16 +43,32 @@ class ReportsController extends Controller
         {
 //
             // التحقق من أن المصفوفة تحتوي على تاريخين
-            if (!isset($request->dates[0]) || !isset($request->dates[1])) {
-                throw new \Exception('تاريخ البدء أو الانتهاء مفقود.');
-            }
+//            if (!isset($request->dates[0]) || !isset($request->dates[1])) {
+//                throw new \Exception('تاريخ البدء أو الانتهاء مفقود.');
+//            }
+//
+//            $dateStart = $request->dates[0];
+//            $dateEnd = $request->dates[1];
+//
+//            // تأكد من تنسيق التواريخ بشكل صحيح
+//            $makeup = Makeup::with(['category', 'discount'])
+//                ->whereBetween('created_at', [$dateStart . ' 00:00:00', $dateEnd . ' 23:59:59'])
+//                ->get();
+//
+//            if ($makeup->isEmpty())
+//            {
+//                return $this->ReturnData('makeup', $makeup, 'Not Found');
+//            }
+//
+//            return $this->ReturnData('makeup', $makeup, 'Done search');
 
-            $dateStart = $request->dates[0];
-            $dateEnd = $request->dates[1];
+
+            $dateStart = $request->dateStart;
+            $dateEnd = $request->dateEnd;
 
             // تأكد من تنسيق التواريخ بشكل صحيح
             $makeup = Makeup::with(['category', 'discount'])
-                ->whereBetween('created_at', [$dateStart . ' 00:00:00', $dateEnd . ' 23:59:59'])
+                ->whereBetween('created_at', [$dateStart, $dateEnd])
                 ->get();
 
             if ($makeup->isEmpty())

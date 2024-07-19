@@ -190,6 +190,8 @@ Route::group(['prefix'=>'superAdmin'],function (){
         Route::post('SearchLoansReports',[ReportsController::class,'SearchLoansReports']);
 
 
+
+
     });
 
 });
