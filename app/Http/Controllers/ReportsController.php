@@ -113,17 +113,13 @@ class ReportsController extends Controller
         try
         {
 //
-            // التحقق من أن المصفوفة تحتوي على تاريخين
-            if (!isset($request->dates[0]) || !isset($request->dates[1])) {
-                throw new \Exception('تاريخ البدء أو الانتهاء مفقود.');
-            }
+            $dateStart = $request->dateStart;
+            $dateEnd = $request->dateEnd;
 
-            $dateStart = $request->dates[0];
-            $dateEnd = $request->dates[1];
 
             // تأكد من تنسيق التواريخ بشكل صحيح
             $studio = Studio::with(['category', 'discount'])
-                ->whereBetween('created_at', [$dateStart . ' 00:00:00', $dateEnd . ' 23:59:59'])
+                ->whereBetween('created_at', [$dateStart, $dateEnd])
                 ->get();
 
             if ($studio->isEmpty())
@@ -165,17 +161,12 @@ class ReportsController extends Controller
     {
         try
         {
-            // التحقق من أن المصفوفة تحتوي على تاريخين
-            if (!isset($request->dates[0]) || !isset($request->dates[1])) {
-                throw new \Exception('تاريخ البدء أو الانتهاء مفقود.');
-            }
+            $dateStart = $request->dateStart;
+            $dateEnd = $request->dateEnd;
 
-            $dateStart = $request->dates[0];
-            $dateEnd = $request->dates[1];
 
-            // تأكد من تنسيق التواريخ بشكل صحيح
             $expense = Expense::with(['category', 'discount'])
-                ->whereBetween('created_at', [$dateStart . ' 00:00:00', $dateEnd . ' 23:59:59'])
+                ->whereBetween('created_at', [$dateStart, $dateEnd])
                 ->get();
 
             if ($expense->isEmpty())
@@ -218,17 +209,11 @@ class ReportsController extends Controller
     {
         try
         {
-            // التحقق من أن المصفوفة تحتوي على تاريخين
-            if (!isset($request->dates[0]) || !isset($request->dates[1])) {
-                throw new \Exception('تاريخ البدء أو الانتهاء مفقود.');
-            }
+            $dateStart = $request->dateStart;
+            $dateEnd = $request->dateEnd;
 
-            $dateStart = $request->dates[0];
-            $dateEnd = $request->dates[1];
-
-            // تأكد من تنسيق التواريخ بشكل صحيح
             $loan = Loan::with(['category', 'discount'])
-                ->whereBetween('created_at', [$dateStart . ' 00:00:00', $dateEnd . ' 23:59:59'])
+                ->whereBetween('created_at', [$dateStart , $dateEnd ])
                 ->get();
 
             if ($loan->isEmpty())
