@@ -77,7 +77,7 @@ class TheJobController extends Controller
         {
             //////////////// validation ////////////////////
             $rules = [
-                'name' => 'required|unique:the_jobs',
+                'name' => 'required',
                 'price' => 'required',
 
             ];
