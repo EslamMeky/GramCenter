@@ -6,6 +6,7 @@ use App\Http\Controllers\DailyController;
 use App\Http\Controllers\DiscountController;
 use App\Http\Controllers\EmployeeControler;
 use App\Http\Controllers\ExpenseController;
+use App\Http\Controllers\Land;
 use App\Http\Controllers\LoansController;
 use App\Http\Controllers\MackupController;
 use App\Http\Controllers\RentsController;
@@ -194,6 +195,11 @@ Route::group(['prefix'=>'superAdmin'],function (){
 
     });
 
+    Route::group(['prefix'=>'land'],function (){
+
+        Route::get('show',[Land::class,'show']);
+
+    });
 });
 
 

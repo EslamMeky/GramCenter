@@ -6,7 +6,7 @@ use App\Http\Traits\GeneralTrait;
 use App\Models\Makeup;
 use App\Models\Studio;
 use Illuminate\Http\Request;
-use Illuminate\Support\Carbon;
+use Carbon\Carbon;
 
 class DailyController extends Controller
 {
@@ -56,8 +56,9 @@ class DailyController extends Controller
     {
         try
         {
-            $today = Carbon::now();
-            $makeup= Makeup::with(['category','discount'])->selection()->whereDate('appropriate', $today)->paginate(pag);
+            $today = Carbon::now()->toDateString(); // Format the date to 'Y-m-d'
+            $tomorrow = Carbon::now()->addDay()->toDateString();
+            $makeup= Makeup::with(['category','discount'])->selection()->whereDate('appropriate', $tomorrow)->paginate(pag);
             return $this->ReturnData('makeup',$makeup,'200');
         }
         catch (\Exception $ex)
@@ -71,9 +72,14 @@ class DailyController extends Controller
     {
         try
         {
-            $today = Carbon::now();
-            $studio= Studio::with(['category','discount'])->selection()->whereDate('appropriate', $today)->paginate(pag);
-            return $this->ReturnData('studio',$studio,'200');
+            $today = Carbon::now()->toDateString(); // Format the date to 'Y-m-d'
+            $tomorrow = Carbon::now()->addDay()->toDateString();
+            $studio = Studio::with(['category', 'discount'])
+                ->selection()
+                ->whereDate('appropriate',$tomorrow)
+                ->paginate(pag);
+
+            return $this->ReturnData('studio', $studio, '200');
         }
         catch (\Exception $ex)
         {
