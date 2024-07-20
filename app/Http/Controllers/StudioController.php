@@ -46,7 +46,7 @@ class StudioController extends Controller
                 'total' => $request ->total,
                 'reason_discount_id' =>$request->reason_discount_id,
                 'price'=>$request->price,
-                'status' =>' تم الدفع',
+                'status' =>'تم الدفع',
                 'arrive' =>$request->arrive,
                 'addService'=>$request->addService,
                 'priceService'=>$request->priceService,
@@ -123,7 +123,7 @@ class StudioController extends Controller
         {
             //////////////// validation ////////////////////
             $rules = [
-                'category_id' => 'required',
+//                'category_id' => 'required',
                 'name' => 'required',
                 'phone' => 'required',
                 'address' => 'required',
@@ -149,8 +149,8 @@ class StudioController extends Controller
             }
             if ($request->rest ==0  ){
             $studio->where('id',$id)->update([
-                'category_id' => $request ->category_id,
-                'notes' =>$request->notes,
+//                'category_id' => $request ->category_id,
+//                'notes' =>$request->notes,
                 'name' => $request ->name,
                 'phone' => $request ->phone,
                 'address' => $request ->address,
@@ -158,22 +158,22 @@ class StudioController extends Controller
                 'pay' => $request ->pay,
                 'rest' => $request ->rest,
                 'total' => $request ->total,
-                'reason_discount_id' =>$request->reason_discount_id,
-                'price' =>$request->price,
+//                'reason_discount_id' =>$request->reason_discount_id,
+//                'price' =>$request->price,
                 'status' =>'تم الدفع',
                 'enter'=>$request->enter,
                 'exit'=>$request->exit,
                 'arrive' =>$request->arrive,
-                'addService'=>$request->addService,
-                'priceService'=>$request->priceService,
+//                'addService'=>$request->addService,
+//                'priceService'=>$request->priceService,
                 'receivedDate'=>$request->receivedDate,
             ]);
             return $this->ReturnSuccess('200','Updated Successfully');
         }
             else{
                 $studio->where('id',$id)->update([
-                    'category_id' => $request ->category_id,
-                    'notes' =>$request->notes,
+//                    'category_id' => $request ->category_id,
+//                    'notes' =>$request->notes,
                     'name' => $request ->name,
                     'phone' => $request ->phone,
                     'address' => $request ->address,
@@ -181,14 +181,14 @@ class StudioController extends Controller
                     'pay' => $request ->pay,
                     'rest' => $request ->rest,
                     'total' => $request ->total,
-                    'reason_discount_id' =>$request->reason_discount_id,
-                    'price' =>$request->price,
+//                    'reason_discount_id' =>$request->reason_discount_id,
+//                    'price' =>$request->price,
                     'status' =>'لم يتم الدفع',
                     'enter'=>$request->enter,
                     'exit'=>$request->exit,
                     'arrive' =>$request->arrive,
-                    'addService'=>$request->addService,
-                    'priceService'=>$request->priceService,
+//                    'addService'=>$request->addService,
+//                    'priceService'=>$request->priceService,
                     'receivedDate'=>$request->receivedDate,
                 ]);
                 return $this->ReturnSuccess('200','Updated Successfully');

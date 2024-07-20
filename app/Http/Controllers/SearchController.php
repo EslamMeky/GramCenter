@@ -281,4 +281,46 @@ class SearchController extends Controller
     }
 
 
+    public function searchMakeupDate(Request $request)
+    {
+        try
+        {
+            $date = $request->date;
+
+            $makeup = Makeup::with(['category','discount'])->where('appropriate',$date)->get();
+//                ->orWhere('lname','LIKE',"%$search%")->get();
+            if ($makeup -> isEmpty())
+            {
+                return $this->ReturnData('makeup',$makeup,'Not Found');
+
+            }
+            return$this->ReturnData('makeup',$makeup,'done search');
+
+        }
+        catch (\Exception $ex){
+            return $this->ReturnError($ex->getCode(),$ex->getCode());
+        }
+    }
+
+    public function searchStudioDate(Request $request)
+    {
+        try
+        {
+            $date = $request->date;
+
+            $studio = Studio::with(['category','discount'])->where('appropriate',$date)->get();
+//                ->orWhere('lname','LIKE',"%$search%")->get();
+            if ($studio -> isEmpty())
+            {
+                return $this->ReturnData('studio',$studio,'Not Found');
+
+            }
+            return$this->ReturnData('studio',$studio,'done search');
+
+        }
+        catch (\Exception $ex){
+            return $this->ReturnError($ex->getCode(),$ex->getCode());
+        }
+    }
+
 }

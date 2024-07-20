@@ -13,7 +13,8 @@ class Land extends Controller
 
     public function show()
     {
-        try {
+        try
+        {
            $category=Category::selection()->where('status','on')->get();
 
             return $this->ReturnData('category', $category, '200');

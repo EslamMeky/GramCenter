@@ -121,7 +121,7 @@ class MackupController extends Controller
         {
             //////////////// validation ////////////////////
             $rules = [
-                'category_id' => 'required',
+//                'category_id' => 'required',
                 'name' => 'required',
                 'phone' => 'required',
                 'address' => 'required',
@@ -146,8 +146,8 @@ class MackupController extends Controller
             }
             if ($request->rest ==0  ){
                 $makeups->where('id',$id)->update([
-                    'category_id' => $request ->category_id,
-                    'notes' =>$request->notes,
+//                    'category_id' => $request ->category_id,
+//                    'notes' =>$request->notes,
                     'name' => $request ->name,
                     'phone' => $request ->phone,
                     'address' => $request ->address,
@@ -155,21 +155,21 @@ class MackupController extends Controller
                     'pay' => $request ->pay,
                     'rest' => $request ->rest,
                     'total' => $request ->total,
-                    'reason_discount_id' =>$request->reason_discount_id,
-                    'price' =>$request->price,
+//                    'reason_discount_id' =>$request->reason_discount_id,
+//                    'price' =>$request->price,
                     'status' =>'تم الدفع',
                     'enter'=>$request->enter,
                     'exit'=>$request->exit,
                     'arrive' =>$request->arrive,
-                    'addService'=>$request->addService,
-                    'priceService'=>$request->priceService,
+//                    'addService'=>$request->addService,
+//                    'priceService'=>$request->priceService,
                 ]);
                 return $this->ReturnSuccess('200','Updated Successfully');
             }
             else{
                 $makeups->where('id',$id)->update([
-                    'category_id' => $request ->category_id,
-                    'notes' =>$request->notes,
+//                    'category_id' => $request ->category_id,
+//                    'notes' =>$request->notes,
                     'name' => $request ->name,
                     'phone' => $request ->phone,
                     'address' => $request ->address,
@@ -177,14 +177,14 @@ class MackupController extends Controller
                     'pay' => $request ->pay,
                     'rest' => $request ->rest,
                     'total' => $request ->total,
-                    'reason_discount_id' =>$request->reason_discount_id,
-                    'price' =>$request->price,
+//                    'reason_discount_id' =>$request->reason_discount_id,
+//                    'price' =>$request->price,
                     'status' =>'لم يتم الدفع',
                     'enter'=>$request->enter,
                     'exit'=>$request->exit,
                     'arrive' =>$request->arrive,
-                    'addService'=>$request->addService,
-                    'priceService'=>$request->priceService,
+//                    'addService'=>$request->addService,
+//                    'priceService'=>$request->priceService,
                 ]);
                 return $this->ReturnSuccess('200','Updated Successfully');
             } }

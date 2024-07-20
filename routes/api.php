@@ -172,6 +172,8 @@ Route::group(['prefix'=>'superAdmin'],function (){
         Route::get('SearchMakeup',[SearchController::class,'SearchMakeup']);
         Route::get('SearchRents',[SearchController::class,'SearchRents']);
         Route::get('SearchWorks',[SearchController::class,'SearchWorks']);
+        Route::get('searchMakeupDate',[SearchController::class,'searchMakeupDate']);
+        Route::get('searchStudioDate',[SearchController::class,'searchStudioDate']);
 
     });
 
