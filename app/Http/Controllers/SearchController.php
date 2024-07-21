@@ -263,7 +263,7 @@ class SearchController extends Controller
         {
             $search = $request->search;
 
-            $work = Work::with(['employee','job'])->whereHas('employee', function ($query) use ($search) {
+            $work = Work::with(['employee'])->whereHas('employee', function ($query) use ($search) {
                 $query->where('employee_name', 'LIKE', "%$search%"); // Search by category name
             })->get();
 
@@ -276,7 +276,8 @@ class SearchController extends Controller
 
         }
         catch (\Exception $ex){
-            return $this->ReturnError($ex->getCode(),$ex->getCode());
+//            return $this->ReturnError($ex->getCode(),$ex->getCode());
+            return $ex;
         }
     }
 
