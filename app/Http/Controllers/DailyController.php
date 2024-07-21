@@ -57,8 +57,8 @@ class DailyController extends Controller
         try
         {
             $today = Carbon::now()->toDateString(); // Format the date to 'Y-m-d'
-            $tomorrow = Carbon::now()->addDay()->toDateString();
-            $makeup= Makeup::with(['category','discount'])->selection()->whereDate('appropriate', $tomorrow)->paginate(pag);
+//            $tomorrow = Carbon::now()->addDay()->toDateString();
+            $makeup= Makeup::with(['category','discount'])->selection()->whereDate('appropriate', $today)->paginate(pag);
             return $this->ReturnData('makeup',$makeup,'200');
         }
         catch (\Exception $ex)
@@ -73,10 +73,10 @@ class DailyController extends Controller
         try
         {
             $today = Carbon::now()->toDateString(); // Format the date to 'Y-m-d'
-            $tomorrow = Carbon::now()->addDay()->toDateString();
+//            $tomorrow = Carbon::now()->addDay()->toDateString();
             $studio = Studio::with(['category', 'discount'])
                 ->selection()
-                ->whereDate('appropriate',$tomorrow)
+                ->whereDate('appropriate',$today)
                 ->paginate(pag);
 
             return $this->ReturnData('studio', $studio, '200');
