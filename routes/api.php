@@ -57,6 +57,7 @@ Route::group(['prefix'=>'superAdmin'],function (){
         Route::post('updateStatus/{id}',[CategoryController::class,'updateStatus']);
         Route::get('showMakeup',[CategoryController::class,'showMakeup']);
         Route::get('showStudio',[CategoryController::class,'showStudio']);
+        Route::get('showCategory',[CategoryController::class,'showCategory']);
 
     });
 

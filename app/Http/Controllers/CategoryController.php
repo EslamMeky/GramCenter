@@ -197,4 +197,15 @@ class CategoryController extends Controller
             return $this->ReturnError($ex->getCode(),$ex->getCode());
         }
     }
+    public function showCategory()
+    {
+        try {
+            $categories= Category::selection()->orderBy('id','desc')->get();
+            return $this->ReturnData('categories',$categories,'200');
+        }
+        catch (\Exception $ex)
+        {
+            return $this->ReturnError($ex->getCode(),$ex->getCode());
+        }
+    }
 }
