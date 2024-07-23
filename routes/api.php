@@ -20,7 +20,7 @@ use App\Http\Controllers\WorksController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
-const pag=5;
+const pag=3;
 
 
 Route::group(['prefix'=>'superAdmin'],function (){

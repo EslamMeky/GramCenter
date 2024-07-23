@@ -44,7 +44,7 @@ class SubCategoryController extends Controller
     public function show()
     {
         try {
-            $subCategory= SubCategory::with('category')->selection()->paginate(pag);
+            $subCategory= SubCategory::with('category')->selection()->orderBy('id','desc')->paginate(pag);
             return $this->ReturnData('subCategory',$subCategory,'200');
         }
         catch (\Exception $ex)

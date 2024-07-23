@@ -57,7 +57,7 @@ class AdminAuthController extends Controller
     public function show()
     {
         try {
-            $users= User::selection()->paginate(pag);
+            $users= User::selection()->orderBy('id','desc')->paginate(pag);
             return $this->ReturnData('users',$users,'200');
         }
         catch (\Exception $ex)
@@ -93,7 +93,6 @@ class AdminAuthController extends Controller
                 'name' => 'required',
                 'email' => 'required',
                 'phone' => 'required',
-//                'password'=>'required',
                 'type'=>'required'
             ];
             $validator = Validator::make($request->all(), $rules);
@@ -114,7 +113,6 @@ class AdminAuthController extends Controller
                     'name'=> $request->name,
                     'email'=> $request->email,
                     'phone'=> $request->phone,
-//                    'password'=>bcrypt($request->password),
                     'type'=>$request->type,
 
             ]);

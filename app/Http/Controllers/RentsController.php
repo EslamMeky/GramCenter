@@ -43,15 +43,15 @@ class RentsController extends Controller
         }
         catch (\Exception $ex)
         {
-//            return $this->ReturnError($ex->getCode(),$ex->getCode());
-            return $ex;
+            return $this->ReturnError($ex->getCode(),$ex->getCode());
+//            return $ex;
         }
     }
 
     public function show()
     {
         try {
-            $rents= Rent::selection()->paginate(pag);
+            $rents= Rent::selection()->orderBy('id','desc')->paginate(pag);
             return $this->ReturnData('rents',$rents,'200');
         }
         catch (\Exception $ex)

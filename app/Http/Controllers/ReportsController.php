@@ -24,6 +24,7 @@ class ReportsController extends Controller
 
             $makeup = Makeup::with(['category', 'discount'])
                 ->selection()
+                ->orderBy('id','desc')
                 ->whereMonth('created_at', $currentMonth)
                 ->whereYear('created_at', $currentYear)
                 ->paginate(pag);
@@ -69,6 +70,7 @@ class ReportsController extends Controller
             // تأكد من تنسيق التواريخ بشكل صحيح
             $makeup = Makeup::with(['category', 'discount'])
                 ->whereBetween('created_at', [$dateStart, $dateEnd])
+                ->orderBy('id','desc')
                 ->get();
 
             if ($makeup->isEmpty())
@@ -95,6 +97,7 @@ class ReportsController extends Controller
 
             $studio = Studio::with(['category', 'discount'])
                 ->selection()
+                ->orderBy('id','desc')
                 ->whereMonth('created_at', $currentMonth)
                 ->whereYear('created_at', $currentYear)
                 ->paginate(pag);
@@ -120,6 +123,7 @@ class ReportsController extends Controller
             // تأكد من تنسيق التواريخ بشكل صحيح
             $studio = Studio::with(['category', 'discount'])
                 ->whereBetween('created_at', [$dateStart, $dateEnd])
+                ->orderBy('id','desc')
                 ->get();
 
             if ($studio->isEmpty())
@@ -145,6 +149,7 @@ class ReportsController extends Controller
             $currentYear = $today->year;
 
             $expense = Expense::selection()
+                ->orderBy('id','desc')
                 ->whereMonth('created_at', $currentMonth)
                 ->whereYear('created_at', $currentYear)
                 ->paginate(pag);
@@ -166,6 +171,7 @@ class ReportsController extends Controller
 
 
             $expense = Expense::whereBetween('created_at', [$dateStart, $dateEnd])
+                ->orderBy('id','desc')
                 ->get();
 
             if ($expense->isEmpty())
@@ -191,6 +197,7 @@ class ReportsController extends Controller
             $currentYear = $today->year;
 
             $loan = Loan::selection()
+                ->orderBy('id','desc')
                 ->whereMonth('created_at', $currentMonth)
                 ->whereYear('created_at', $currentYear)
                 ->paginate(pag);
@@ -212,6 +219,7 @@ class ReportsController extends Controller
             $dateEnd = $request->dateEnd;
 
             $loan = Loan::whereBetween('created_at', [$dateStart , $dateEnd ])
+                ->orderBy('id','desc')
                 ->get();
 
             if ($loan->isEmpty())
@@ -223,8 +231,8 @@ class ReportsController extends Controller
         }
         catch (\Exception $ex)
         {
-//            return $this->ReturnError($ex->getCode(),$ex->getCode());
-return $ex;
+            return $this->ReturnError($ex->getCode(),$ex->getCode());
+            //return $ex;
         }
     }
 

@@ -45,7 +45,7 @@ class ExpenseController extends Controller
     public function show()
     {
         try {
-            $expense= Expense::selection()->paginate(pag);
+            $expense= Expense::selection()->orderBy('id','desc')->paginate(pag);
             return $this->ReturnData('expense',$expense,'200');
         }
         catch (\Exception $ex)

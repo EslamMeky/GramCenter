@@ -42,7 +42,7 @@ class DiscountController extends Controller
     public function show()
     {
         try {
-            $discounts= Discount::selection()->paginate(pag);
+            $discounts= Discount::selection()->orderBy('id','desc')->paginate(pag);
             return $this->ReturnData('discounts',$discounts,'200');
         }
         catch (\Exception $ex)
@@ -143,7 +143,7 @@ class DiscountController extends Controller
     public function getDiscount()
     {
         try {
-            $discounts= Discount::selection()->get();
+            $discounts= Discount::selection()->orderBy('id','desc')->get();
             return $this->ReturnData('discounts',$discounts,'200');
         }
         catch (\Exception $ex)
@@ -163,7 +163,7 @@ class DiscountController extends Controller
             }
 
             // جلب التخفيضات بناءً على المعرّفات
-            $discounts = Discount::whereIn('id',$ids)->get();
+            $discounts = Discount::whereIn('id',$ids)->orderBy('id','desc')->get();
 
             if ($discounts->isEmpty()) {
                 return $this->ReturnError('404', 'No discounts found for the provided IDs');

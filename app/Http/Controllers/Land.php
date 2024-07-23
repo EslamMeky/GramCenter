@@ -15,7 +15,7 @@ class Land extends Controller
     {
         try
         {
-           $category=Category::selection()->where('status','on')->get();
+           $category=Category::selection()->orderBy('id','desc')->where('status','on')->get();
 
             return $this->ReturnData('category', $category, '200');
         }

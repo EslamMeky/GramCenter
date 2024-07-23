@@ -44,7 +44,7 @@ class TheJobController extends Controller
     public function show()
     {
         try {
-            $jobs= TheJob::selection()->paginate(pag);
+            $jobs= TheJob::selection()->orderBy('id','desc')->paginate(pag);
             return $this->ReturnData('jobs',$jobs,'200');
         }
         catch (\Exception $ex)
@@ -126,7 +126,7 @@ class TheJobController extends Controller
     public function getJobs()
     {
         try {
-            $jobs= TheJob::selection()->get();
+            $jobs= TheJob::selection()->orderBy('id','desc')->get();
             return $this->ReturnData('jobs',$jobs,'200');
         }
         catch (\Exception $ex)
@@ -141,7 +141,7 @@ class TheJobController extends Controller
 //            if (!$job) {
 //                return $this->ReturnError('404', 'Not Found');
 //            }
-            $job=TheJob::selection()->where('name',$name)->get();
+            $job=TheJob::selection()->orderBy('id','desc')->where('name',$name)->get();
             if ($job -> isEmpty())
             {
                 return $this->ReturnData('job',$job,'Not Found');

@@ -90,7 +90,7 @@ class StudioController extends Controller
     public function show()
     {
         try {
-            $studio= Studio::with(['category','discount'])->selection()->paginate(pag);
+            $studio= Studio::with(['category','discount'])->selection()->orderBy('id','desc')->paginate(pag);
             return $this->ReturnData('studio',$studio,'200');
         }
         catch (\Exception $ex)

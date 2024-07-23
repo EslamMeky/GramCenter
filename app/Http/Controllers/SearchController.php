@@ -276,8 +276,8 @@ class SearchController extends Controller
 
         }
         catch (\Exception $ex){
-//            return $this->ReturnError($ex->getCode(),$ex->getCode());
-            return $ex;
+            return $this->ReturnError($ex->getCode(),$ex->getCode());
+//            return $ex;
         }
     }
 

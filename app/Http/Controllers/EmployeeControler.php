@@ -45,7 +45,7 @@ class EmployeeControler extends Controller
     public function show()
     {
         try {
-           $employees= Employee::selection()->paginate(pag);
+           $employees= Employee::selection()->orderBy('id','desc')->paginate(pag);
             return $this->ReturnData('employee',$employees,'200');
         }
         catch (\Exception $ex)
@@ -133,7 +133,7 @@ class EmployeeControler extends Controller
     public function getEmployee()
     {
         try {
-            $employees= Employee::selection()->get();
+            $employees= Employee::selection()->orderBy('id','desc')->get();
             return $this->ReturnData('employee',$employees,'200');
         }
         catch (\Exception $ex)

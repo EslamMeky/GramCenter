@@ -43,7 +43,7 @@ class LoansController extends Controller
     public function show()
     {
         try {
-            $loan= Loan::selection()->paginate(pag);
+            $loan= Loan::selection()->orderBy('id','desc')->paginate(pag);
             return $this->ReturnData('loan',$loan,'200');
         }
         catch (\Exception $ex)
