@@ -206,3 +206,9 @@ Route::group(['prefix'=>'superAdmin'],function (){
 });
 
 
+Route::get('/updateapp', function()
+{
+    shell_exec('composer dump-autoload');
+    echo 'dump-autoload complete';
+});
+

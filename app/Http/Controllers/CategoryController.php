@@ -33,6 +33,10 @@ class CategoryController extends Controller
             }
             ////////////////////  save  ///////////////////
             $pathFile=uploadImage('category',$request->photo);
+//            $file_ex=$request->photo->getClientOriginalExtension();
+//            $fileName= time().'.'.$file_ex;
+//            $path='images/categories';
+//            $request->photo->move($path,$fileName);
             Category::create([
                 'name'=> $request->name,
                 'desc'=> $request->desc,
@@ -120,6 +124,10 @@ class CategoryController extends Controller
             if ($request->hasFile('photo'))
             {
                 $pathFile=uploadImage('category',$request->photo);
+//                $file_ex=$request->photo->getClientOriginalExtension();
+//                $fileName= time().'.'.$file_ex;
+//                $path='images/categories';
+//                $request->photo->move($path,$fileName);
                 $category->where('id',$id)->update([
                     'photo' => $pathFile,
                     ]);
@@ -207,5 +215,13 @@ class CategoryController extends Controller
         {
             return $this->ReturnError($ex->getCode(),$ex->getCode());
         }
+    }
+
+    function uploadImage($folder,$image)
+    {
+        $image->store('/',$folder);
+        $filename=$image->hashName();
+        $path='images/'.$folder.'/'.$filename;
+        return $path;
     }
 }
