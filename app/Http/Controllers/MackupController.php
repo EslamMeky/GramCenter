@@ -7,6 +7,7 @@ use App\Models\Makeup;
 use App\Models\Studio;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
+use Carbon\Carbon;
 
 class MackupController extends Controller
 {
@@ -148,9 +149,9 @@ class MackupController extends Controller
                 'pay'=> 'required',
                 'rest'=> 'required',
                 'total'=> 'required',
-                'notes' => 'required|array',  // Ensure notes is an array
-                'notes.*.key' => 'required|string', // Ensure each note key is a string
-                'notes.*.value' => 'required|integer', // Ensure each note value is a string
+                'notes' => 'nullable|array',  // Ensure notes is an array
+                'notes.*.key' => 'nullable|string', // Ensure each note key is a string
+                'notes.*.value' => 'nullable|integer', // Ensure each note value is a string
             ];
 
             $validator = Validator::make($request->all(), $rules);
@@ -176,6 +177,10 @@ class MackupController extends Controller
                 'arrive' => $request->arrive,
                 'addService' => $request->addService,
                 'priceService' => $request->priceService,
+                'dateService'=>$request->dateService,
+                'typeHair'=>$request->typeHair,
+                'priceHair'=>$request->priceHair,
+                'dateHair'=>$request->dateHair
             ]);
 
             return $this->ReturnSuccess('200', 'Save Successfully');
@@ -188,6 +193,9 @@ class MackupController extends Controller
 //    {
 //        try {
 //            $makeups= Makeup::with(['category','discount'])->selection()->orderBy('id','desc')->paginate(pag);
+//            foreach ($makeups as $makeup) {
+//                $makeup->notes = json_decode($makeup->notes, true); // تحويل notes إلى مصفوفة
+//            }
 //            return $this->ReturnData('makeups',$makeups,'200');
 //        }
 //        catch (\Exception $ex)
@@ -199,20 +207,6 @@ class MackupController extends Controller
 
     public function show(Request $request)
     {
-//        try {
-//            // استرجاع البيانات مع العلاقات المطلوبة
-//            $makeups = Makeup::with(['category', 'discount'])->selection()->orderBy('id', 'desc')->paginate(pag);
-//
-//            // تحويل notes من JSON إلى Array لكل عنصر في النتائج
-//            foreach ($makeups as $makeup) {
-//                $makeup->notes = json_decode($makeup->notes, true); // تحويل notes إلى مصفوفة
-//            }
-//
-//            return $this->ReturnData('makeups', $makeups, '200');
-//        } catch (\Exception $ex) {
-//            return $this->ReturnError($ex->getCode(), $ex->getMessage());
-//        }
-
         try
         {
             $search = $request->search;
@@ -266,6 +260,7 @@ class MackupController extends Controller
 
             // Decode the notes JSON back to an array
             $makeup->notes = json_decode($makeup->notes, true);
+            $makeup=Makeup::with(['category','discount'])->Selection()->where('id',$id)->get();
 
             return $this->ReturnData('makeups', $makeup, '200');
         } catch (\Exception $ex) {
@@ -353,9 +348,9 @@ class MackupController extends Controller
                 'pay'=> 'required',
                 'rest'=> 'required',
                 'total'=> 'required',
-                'notes' => 'required|array',  // Ensure notes is an array
-                'notes.*.key' => 'required|string', // Ensure each note key is a string
-                'notes.*.value' => 'required|string', // Ensure each note value is a string
+                'notes' => 'nullable|array',  // Ensure notes is an array
+                'notes.*.key' => 'nullable|string', // Ensure each note key is a string
+                'notes.*.value' => 'nullable|integer', // Ensure each note value is a string
             ];
 
             $validator = Validator::make($request->all(), $rules);
@@ -389,6 +384,10 @@ class MackupController extends Controller
                 'arrive' => $request->arrive,
                 'addService' => $request->addService,
                 'priceService' => $request->priceService,
+                'dateService'=>$request->dateService,
+                'typeHair'=>$request->typeHair,
+                'priceHair'=>$request->priceHair,
+                'dateHair'=>$request->dateHair
             ]);
 
             return $this->ReturnSuccess('200', 'Updated Successfully');
@@ -418,5 +417,49 @@ class MackupController extends Controller
         }
     }
 
+    public function updateInstallment(Request $request,$id)
+    {
+        try
+        {
+            $makeups= Makeup::find($id);
+            if (!$makeups)
+            {
+                return $this->ReturnError('404','Not Found');
+            }
+            if ($request->has('secondInstallment') && $makeups->secondInstallment==null)
+            {
+                $makeups->update([
+                   'secondInstallment'=>$request->secondInstallment,
+                   'DateOfTheSecondInstallment'=>now(),
+                    'pay'=>$request->pay,
+                    'rest'=>$request->rest,
+                    'total'=>$request->total,
+                    'status' => $request->rest == 0 ? 'تم الدفع' : 'لم يتم الدفع',
+
+                ]);
+                return $this->ReturnSuccess('200','updated secondInstallment Successfully');
+
+            }
+            elseif ($request->has('thirdInstallment')&& $makeups->secondInstallment!=null)
+            {
+                $makeups->update([
+                    'thirdInstallment'=>$request->thirdInstallment,
+                    'DateOfTheThirdInstallment'=>now(),
+                    'pay'=>$request->pay,
+                    'rest'=>$request->rest,
+                    'total'=>$request->total,
+                    'status' => $request->rest == 0 ? 'تم الدفع' : 'لم يتم الدفع',
+
+                ]);
+                return $this->ReturnSuccess('200','updated third Installment Successfully');
+            }
+
+        }
+        catch (\Exception $ex){
+            return $this->ReturnError($ex->getCode(),$ex->getCode());
+        //return $ex;
+        }
+
+    }
 
 }

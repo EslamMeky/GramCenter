@@ -19,6 +19,7 @@ return new class extends Migration
             $table->json('notes')->nullable();
             $table->text('addService')->nullable();
             $table->integer('priceService')->nullable();
+            $table->date('dateService')->nullable();
             $table->string('name');
             $table->string('phone');
             $table->string('address');
@@ -26,12 +27,19 @@ return new class extends Migration
             $table->integer('pay');
             $table->integer('rest');
             $table->integer('total');
+            $table->integer('secondInstallment')->nullable();
+            $table->timestamp('DateOfTheSecondInstallment')->nullable();
+            $table->integer('thirdInstallment')->nullable();
+            $table->timestamp('DateOfTheThirdInstallment')->nullable();
             $table->integer('reason_discount_id')->nullable();
             $table->integer('price')->nullable();
             $table->time('enter')->nullable();
             $table->time('exit')->nullable();
             $table->string('status');
             $table->time('arrive')->nullable();
+            $table->string('typeHair')->nullable();
+            $table->integer('priceHair')->nullable();
+            $table->date('dateHair')->nullable();
             $table->timestamps();
         });
     }

@@ -135,6 +135,8 @@ Route::group(['prefix'=>'superAdmin'],function (){
         Route::get('edit/{id}',[MackupController::class,'edit']);
         Route::post('update/{id}',[MackupController::class,'update']);
         Route::get('delete/{id}',[MackupController::class,'delete']);
+        Route::post('updateInstallment/{id}',[MackupController::class,'updateInstallment']);
+
 
 
     });
