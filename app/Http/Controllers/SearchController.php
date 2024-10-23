@@ -220,14 +220,20 @@ class SearchController extends Controller
         {
             $search = $request->search;
 
-            $makeup = Makeup::with(['category','discount'])->where('name','LIKE',"%$search%")->get();
+            $makeups = Makeup::with(['category','discount'])
+                ->where('name','LIKE',"%$search%")
+                ->orderBy('id', 'desc')
+                ->paginate(pag);
 //                ->orWhere('lname','LIKE',"%$search%")->get();
-            if ($makeup -> isEmpty())
+            if ($makeups -> isEmpty())
             {
-                return $this->ReturnData('makeup',$makeup,'Not Found');
+                return $this->ReturnData('makeup',$makeups,'Not Found');
 
             }
-            return$this->ReturnData('makeup',$makeup,'done search');
+            foreach ($makeups as $makeup) {
+                $makeup->notes = json_decode($makeup->notes, true); // تحويل notes إلى مصفوفة
+            }
+            return$this->ReturnData('makeups',$makeups,'done search');
 
         }
         catch (\Exception $ex){

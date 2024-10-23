@@ -16,7 +16,7 @@ return new class extends Migration
         Schema::create('makeups', function (Blueprint $table) {
             $table->id();
             $table->integer('category_id');
-            $table->text('notes')->nullable();
+            $table->json('notes')->nullable();
             $table->text('addService')->nullable();
             $table->integer('priceService')->nullable();
             $table->string('name');
