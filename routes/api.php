@@ -195,6 +195,8 @@ Route::group(['prefix'=>'superAdmin'],function (){
         Route::get('LoansReports',[ReportsController::class,'LoansReports']);
         Route::post('SearchLoansReports',[ReportsController::class,'SearchLoansReports']);
 
+        Route::get('worksReports',[ReportsController::class,'worksReports']);
+        Route::post('SearchWorksReports',[ReportsController::class,'SearchWorksReports']);
 
 
 

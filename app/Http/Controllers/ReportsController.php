@@ -7,6 +7,7 @@ use App\Models\Expense;
 use App\Models\Loan;
 use App\Models\Makeup;
 use App\Models\Studio;
+use App\Models\Work;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 
@@ -236,6 +237,67 @@ class ReportsController extends Controller
         }
     }
 
+
+
+    public function worksReports()
+    {
+        try
+        {
+            $today = Carbon::now();
+            $currentMonth = $today->month;
+            $currentYear = $today->year;
+
+            $works = Work::with(['employee'])->selection()
+                ->orderBy('id','desc')
+                ->whereMonth('created_at', $currentMonth)
+                ->whereYear('created_at', $currentYear)
+                ->paginate(pag);
+
+            return $this->ReturnData('works', $works, '200');
+        }
+        catch (\Exception $ex)
+        {
+            return $this->ReturnError($ex->getCode(),$ex->getCode());
+
+        }
+    }
+
+    public function SearchWorksReports(Request $request)
+    {
+        try
+        {
+            $dateStart = $request->dateStart;
+            $dateEnd = $request->dateEnd;
+            $search = $request->search;
+
+            $works = Work::with(['employee'])
+                ->whereBetween('created_at', [$dateStart, $dateEnd])
+                ->when($search, function ($query) use ($search) {
+                    $query->whereHas('employee', function ($q) use ($search) {
+                        $q->where('employee_name', 'like', '%' . $search . '%'); // استبدل 'employee_field_name' بالحقل الذي تريد البحث فيه في جدول employee
+                    });
+                })
+                ->orderBy('id', 'desc')
+                ->get();
+            $totalSum=$works->sum('total');
+
+            if ($works->isEmpty())
+            {
+                return $this->ReturnData('works', $works, 'Not Found');
+            }
+
+            $data=[
+                'Works'=>$works,
+                'TotalSum'=>$totalSum,
+            ];
+            return $this->ReturnData('data', $data, 'Done search');
+        }
+        catch (\Exception $ex)
+        {
+            return $this->ReturnError($ex->getCode(),$ex->getCode());
+            //return $ex;
+        }
+    }
 
 }
 
