@@ -23,6 +23,7 @@ class Makeup extends Model
         'pay',
         'rest',
         'total',
+        'DateOfTheFirstInstallment',
         'secondInstallment',
         'DateOfTheSecondInstallment',
         'thirdInstallment',
@@ -38,7 +39,7 @@ class Makeup extends Model
         'dateHair',
         'created_at',
         'updated_at',
-    ];
+        ];
 
     public $timestamps=true;
 
@@ -58,6 +59,7 @@ class Makeup extends Model
          'pay',
          'rest',
          'total',
+         'DateOfTheFirstInstallment',
          'secondInstallment',
          'DateOfTheSecondInstallment',
          'thirdInstallment',

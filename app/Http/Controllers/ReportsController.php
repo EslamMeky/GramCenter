@@ -299,6 +299,99 @@ class ReportsController extends Controller
         }
     }
 
+    public function showDailyTotal()
+    {
+        try
+        {
+
+            $today = Carbon::now()->toDateString(); // تاريخ اليوم بصيغة 'Y-m-d'
+
+// جلب السجلات التي يكون تاريخها مطابقًا اليوم لأي من الأعمدة المحددة
+            $makeups = Makeup::where(function ($query) use ($today) {
+                $query->whereDate('DateOfTheFirstInstallment', $today)
+                    ->orWhereDate('DateOfTheSecondInstallment', $today)
+                    ->orWhereDate('DateOfTheThirdInstallment', $today);
+            })->get();
+
+// حساب مجموع الأقساط المطابقة
+            foreach ($makeups as $makeup) {
+                $makeup->notes = json_decode($makeup->notes, true); // تحويل notes إلى مصفوفة
+            }
+            $totalPriceMakeup = $makeups->sum(function ($makeup) use ($today) {
+                if ($makeup->DateOfTheFirstInstallment == $today) {
+                    return $makeup->pay;
+                } elseif ($makeup->DateOfTheSecondInstallment == $today) {
+                    return $makeup->secondInstallment;
+                } elseif ($makeup->DateOfTheThirdInstallment == $today) {
+                    return $makeup->thirdInstallment;
+                }
+                return 0;
+            });
+
+
+            /////////////////////////////    studio ///////
+            $sudios = Studio::where(function ($query) use ($today) {
+                $query->whereDate('DateOfTheFirstInstallment', $today)
+                    ->orWhereDate('DateOfTheSecondInstallment', $today)
+                    ->orWhereDate('DateOfTheThirdInstallment', $today);
+            })->get();
+
+// حساب مجموع الأقساط المطابقة
+            foreach ($sudios as $sudio) {
+                $sudio->notes = json_decode($sudio->notes, true); // تحويل notes إلى مصفوفة
+            }
+            $totalPriceStudio = $sudios->sum(function ($makeup) use ($today) {
+                if ($makeup->DateOfTheFirstInstallment == $today) {
+                    return $makeup->pay;
+                } elseif ($makeup->DateOfTheSecondInstallment == $today) {
+                    return $makeup->secondInstallment;
+                } elseif ($makeup->DateOfTheThirdInstallment == $today) {
+                    return $makeup->thirdInstallment;
+                }
+                return 0;
+            });
+///////////////////////////////  expenses  /////////////////
+            $expenses = Expense::whereDate('updated_at', $today)->get();
+            $totalPriceExpenses = $expenses->sum('price');
+
+            $loans = Loan::whereDate('updated_at', $today)->get();
+            $totalPriceLoans = $loans->sum('price');
+
+            $works = Work::with(['employee'])->whereDate('updated_at', $today)->get();
+            $totalPriceWorks = $works->sum('total');
+
+            //////// total daily //////
+            $totalDaily=($totalPriceMakeup + $totalPriceStudio + $totalPriceWorks - $totalPriceExpenses - $totalPriceLoans);
+            $data=[
+              'makeups'=>$makeups,
+              'totalInstallmentsSum'=>$totalPriceMakeup,
+
+              'studio'=>$sudios,
+              'totalPriceStudio'=>$totalPriceStudio,
+
+              'works'=>$works,
+              '$totalPriceWorks'=>$totalPriceWorks,
+
+              'expenses' =>$expenses,
+              'totalPriceExpenses' =>$totalPriceExpenses,
+
+              'loans' =>$loans,
+              'totalPriceLoans' =>$totalPriceLoans,
+
+
+              'totalDaily' =>$totalDaily
+
+            ];
+            return $this->ReturnData('data', $data, '200');
+        }
+        catch (\Exception $ex)
+        {
+            return $this->ReturnError($ex->getCode(),$ex->getCode());
+
+        }
+    }
+
+
 }
 
 

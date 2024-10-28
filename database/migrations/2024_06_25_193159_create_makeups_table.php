@@ -27,6 +27,7 @@ return new class extends Migration
             $table->integer('pay');
             $table->integer('rest');
             $table->integer('total');
+            $table->timestamp('DateOfTheFirstInstallment')->nullable();
             $table->integer('secondInstallment')->nullable();
             $table->timestamp('DateOfTheSecondInstallment')->nullable();
             $table->integer('thirdInstallment')->nullable();

@@ -52,14 +52,45 @@ class DailyController extends Controller
 //
 //    }
 
+    public function showHair(){
+        try
+        {
+            $today = Carbon::now()->toDateString(); // Format the date to 'Y-m-d'
+//            $tomorrow = Carbon::now()->addDay()->toDateString();
+            $hairs= Makeup::with(['category','discount'])->selection()->orderBy('id','desc')->whereDate('dateHair', $today)->paginate(pag);
+            foreach ($hairs as $hair) {
+                $hair->notes = json_decode($hair->notes, true); // تحويل notes إلى مصفوفة
+            }
+
+            return $this->ReturnData('hairs',$hairs,'200');
+
+        }
+        catch (\Exception $ex)
+        {
+            return $this->ReturnError($ex->getCode(),$ex->getCode());
+        }
+    }
+
     public function showMakeup()
     {
         try
         {
             $today = Carbon::now()->toDateString(); // Format the date to 'Y-m-d'
 //            $tomorrow = Carbon::now()->addDay()->toDateString();
-            $makeup= Makeup::with(['category','discount'])->selection()->orderBy('id','desc')->whereDate('appropriate', $today)->paginate(pag);
-            return $this->ReturnData('makeup',$makeup,'200');
+
+            $makeups= Makeup::with(['category','discount'])->selection()->orderBy('id','desc')->whereDate('appropriate', $today)->paginate(pag);
+            foreach ($makeups as $makeup) {
+                $makeup->notes = json_decode($makeup->notes, true); // تحويل notes إلى مصفوفة
+            }
+            $services= Makeup::with(['category','discount'])->selection()->orderBy('id','desc')->whereDate('dateService', $today)->paginate(pag);
+            foreach ($services as $service) {
+                $service->notes = json_decode($service->notes, true); // تحويل notes إلى مصفوفة
+            }
+            $data=[
+                'makeups'=>$makeups,
+                'services'=>$services
+            ];
+            return $this->ReturnData('data',$data,'200');
         }
         catch (\Exception $ex)
         {

@@ -180,7 +180,8 @@ class MackupController extends Controller
                 'dateService'=>$request->dateService,
                 'typeHair'=>$request->typeHair,
                 'priceHair'=>$request->priceHair,
-                'dateHair'=>$request->dateHair
+                'dateHair'=>$request->dateHair,
+                'DateOfTheFirstInstallment'=>now(),
             ]);
 
             return $this->ReturnSuccess('200', 'Save Successfully');
@@ -253,14 +254,14 @@ class MackupController extends Controller
     public function edit($id)
     {
         try {
-            $makeup = Makeup::find($id);
+            $makeup = Makeup::with(['category','discount'])->Selection()->find($id);
             if (!$makeup) {
                 return $this->ReturnError('404', 'Not Found');
             }
 
             // Decode the notes JSON back to an array
             $makeup->notes = json_decode($makeup->notes, true);
-            $makeup=Makeup::with(['category','discount'])->Selection()->where('id',$id)->get();
+
 
             return $this->ReturnData('makeups', $makeup, '200');
         } catch (\Exception $ex) {
@@ -350,7 +351,8 @@ class MackupController extends Controller
                 'total'=> 'required',
                 'notes' => 'nullable|array',  // Ensure notes is an array
                 'notes.*.key' => 'nullable|string', // Ensure each note key is a string
-                'notes.*.value' => 'nullable|integer', // Ensure each note value is a string
+                'notes.*.value' => 'nullable|integer',
+                // Ensure each note value is a string
             ];
 
             $validator = Validator::make($request->all(), $rules);
@@ -387,7 +389,9 @@ class MackupController extends Controller
                 'dateService'=>$request->dateService,
                 'typeHair'=>$request->typeHair,
                 'priceHair'=>$request->priceHair,
-                'dateHair'=>$request->dateHair
+                'dateHair'=>$request->dateHair,
+                'DateOfTheFirstInstallment'=>now(),
+
             ]);
 
             return $this->ReturnSuccess('200', 'Updated Successfully');
@@ -456,7 +460,7 @@ class MackupController extends Controller
 
         }
         catch (\Exception $ex){
-            return $this->ReturnError($ex->getCode(),$ex->getCode());
+            return $this->ReturnError($ex->getCode(),$ex->getMessage());
         //return $ex;
         }
 

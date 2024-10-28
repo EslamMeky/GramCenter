@@ -16,9 +16,10 @@ return new class extends Migration
         Schema::create('studios', function (Blueprint $table) {
             $table->id();
             $table->integer('category_id');
-            $table->text('notes')->nullable();
+            $table->json('notes')->nullable();
             $table->text('addService')->nullable();
             $table->integer('priceService')->nullable();
+            $table->date('dateService')->nullable();
             $table->string('name');
             $table->string('phone');
             $table->string('address');
@@ -27,6 +28,11 @@ return new class extends Migration
             $table->integer('pay');
             $table->integer('rest');
             $table->integer('total');
+            $table->timestamp('DateOfTheFirstInstallment')->nullable();
+            $table->integer('secondInstallment')->nullable();
+            $table->timestamp('DateOfTheSecondInstallment')->nullable();
+            $table->integer('thirdInstallment')->nullable();
+            $table->timestamp('DateOfTheThirdInstallment')->nullable();
             $table->integer('reason_discount_id')->nullable();
             $table->integer('price')->nullable();
             $table->time('enter')->nullable();

@@ -147,6 +147,8 @@ Route::group(['prefix'=>'superAdmin'],function (){
         Route::get('edit/{id}',[StudioController::class,'edit']);
         Route::post('update/{id}',[StudioController::class,'update']);
         Route::get('delete/{id}',[StudioController::class,'delete']);
+        Route::post('updateInstallment/{id}',[StudioController::class,'updateInstallment']);
+
     });
 
     Route::group(['prefix'=>'daily'],function (){
@@ -156,6 +158,7 @@ Route::group(['prefix'=>'superAdmin'],function (){
         Route::post('updateStatusStudio/{id}',[DailyController::class,'updateStatusStudio']);
         Route::get('showMakeup',[DailyController::class,'showMakeup']);
         Route::get('showStudio',[DailyController::class,'showStudio']);
+        Route::get('showHair',[DailyController::class,'showHair']);
 //        Route::post('update/{id}',[DailyController::class,'update']);
 //        Route::get('delete/{id}',[DailyController::class,'delete']);
     });
@@ -197,6 +200,9 @@ Route::group(['prefix'=>'superAdmin'],function (){
 
         Route::get('worksReports',[ReportsController::class,'worksReports']);
         Route::post('SearchWorksReports',[ReportsController::class,'SearchWorksReports']);
+
+        Route::get('showDailyTotal',[ReportsController::class,'showDailyTotal']);
+
 
 
 
