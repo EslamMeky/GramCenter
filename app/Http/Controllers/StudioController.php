@@ -150,6 +150,8 @@ class StudioController extends Controller
                 'price' => $request->price,
                 'status' => $request->rest == 0 ? 'تم الدفع' : 'لم يتم الدفع',
                 'arrive' => $request->arrive,
+                'enter'=>$request->enter,
+                'exit'=>$request->exit,
                 'addService' => $request->addService,
                 'priceService' => $request->priceService,
                 'dateService' => $request->dateService,
