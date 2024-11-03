@@ -105,13 +105,17 @@ class DailyController extends Controller
         {
             $today = Carbon::now()->toDateString(); // Format the date to 'Y-m-d'
 //            $tomorrow = Carbon::now()->addDay()->toDateString();
-            $studio = Studio::with(['category', 'discount'])
+            $studios = Studio::with(['category', 'discount'])
                 ->selection()
                 ->orderBy('id','desc')
                 ->whereDate('appropriate',$today)
                 ->paginate(pag);
 
-            return $this->ReturnData('studio', $studio, '200');
+            foreach ($studios as $studio) {
+                $studio->notes = json_decode($studio->notes, true); // تحويل notes إلى مصفوفة
+            }
+
+            return $this->ReturnData('studios', $studios, '200');
         }
         catch (\Exception $ex)
         {
