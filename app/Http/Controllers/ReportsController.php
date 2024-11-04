@@ -318,14 +318,17 @@ class ReportsController extends Controller
                 $makeup->notes = json_decode($makeup->notes, true); // تحويل notes إلى مصفوفة
             }
             $totalPriceMakeup = $makeups->sum(function ($makeup) use ($today) {
+                $total = 0;
                 if ($makeup->DateOfTheFirstInstallment == $today) {
-                    return $makeup->pay;
-                } elseif ($makeup->DateOfTheSecondInstallment == $today) {
-                    return $makeup->secondInstallment;
-                } elseif ($makeup->DateOfTheThirdInstallment == $today) {
-                    return $makeup->thirdInstallment;
+                    $total += $makeup->pay;
                 }
-                return 0;
+                if ($makeup->DateOfTheSecondInstallment == $today) {
+                    $total += $makeup->secondInstallment;
+                }
+                if ($makeup->DateOfTheThirdInstallment == $today) {
+                    $total += $makeup->thirdInstallment;
+                }
+                return $total;
             });
 
 
@@ -340,16 +343,20 @@ class ReportsController extends Controller
             foreach ($sudios as $sudio) {
                 $sudio->notes = json_decode($sudio->notes, true); // تحويل notes إلى مصفوفة
             }
-            $totalPriceStudio = $sudios->sum(function ($makeup) use ($today) {
-                if ($makeup->DateOfTheFirstInstallment == $today) {
-                    return $makeup->pay;
-                } elseif ($makeup->DateOfTheSecondInstallment == $today) {
-                    return $makeup->secondInstallment;
-                } elseif ($makeup->DateOfTheThirdInstallment == $today) {
-                    return $makeup->thirdInstallment;
+            $totalPriceStudio = $sudios->sum(function ($sudio) use ($today) {
+                $total = 0;
+                if ($sudio->DateOfTheFirstInstallment == $today) {
+                    $total += $sudio->pay;
                 }
-                return 0;
+                if ($sudio->DateOfTheSecondInstallment == $today) {
+                    $total += $sudio->secondInstallment;
+                }
+                if ($sudio->DateOfTheThirdInstallment == $today) {
+                    $total += $sudio->thirdInstallment;
+                }
+                return $total;
             });
+
 ///////////////////////////////  expenses  /////////////////
             $expenses = Expense::whereDate('updated_at', $today)->get();
             $totalPriceExpenses = $expenses->sum('price');
