@@ -199,14 +199,18 @@ class SearchController extends Controller
         {
             $search = $request->search;
 
-            $studio = Studio::with(['category','discount'])->where('name','LIKE',"%$search%")->get();
+            $studios = Studio::with(['category','discount'])->where('name','LIKE',"%$search%")->get();
 //                ->orWhere('lname','LIKE',"%$search%")->get();
-            if ($studio -> isEmpty())
+            if ($studios -> isEmpty())
             {
-                return $this->ReturnData('studio',$studio,'Not Found');
+                return $this->ReturnData('studio',$studios,'Not Found');
 
             }
-            return$this->ReturnData('studio',$studio,'done search');
+            foreach ($studios as $studio)
+            {
+                $studio->notes = json_decode($studio->notes, true); // تحويل notes إلى مصفوفة
+            }
+            return$this->ReturnData('studio',$studios,'done search');
 
         }
         catch (\Exception $ex){
