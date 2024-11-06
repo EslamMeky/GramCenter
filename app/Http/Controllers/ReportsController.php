@@ -23,14 +23,18 @@ class ReportsController extends Controller
             $currentMonth = $today->month;
             $currentYear = $today->year;
 
-            $makeup = Makeup::with(['category', 'discount'])
+            $makeups = Makeup::with(['category', 'discount'])
                 ->selection()
                 ->orderBy('id','desc')
                 ->whereMonth('created_at', $currentMonth)
                 ->whereYear('created_at', $currentYear)
                 ->paginate(pag);
 
-            return $this->ReturnData('makeup', $makeup, '200');
+            foreach ($makeups as $makeup) {
+                $makeup->notes = json_decode($makeup->notes, true); // تحويل notes إلى مصفوفة
+            }
+
+            return $this->ReturnData('makeup', $makeups, '200');
         }
         catch (\Exception $ex)
         {
@@ -69,17 +73,20 @@ class ReportsController extends Controller
             $dateEnd = $request->dateEnd;
 
             // تأكد من تنسيق التواريخ بشكل صحيح
-            $makeup = Makeup::with(['category', 'discount'])
+            $makeups = Makeup::with(['category', 'discount'])
                 ->whereBetween('created_at', [$dateStart, $dateEnd])
                 ->orderBy('id','desc')
                 ->get();
 
-            if ($makeup->isEmpty())
+            if ($makeups->isEmpty())
             {
-                return $this->ReturnData('makeup', $makeup, 'Not Found');
+                return $this->ReturnData('makeup', $makeups, 'Not Found');
+            }
+            foreach ($makeups as $makeup) {
+                $makeup->notes = json_decode($makeup->notes, true); // تحويل notes إلى مصفوفة
             }
 
-            return $this->ReturnData('makeup', $makeup, 'Done search');
+            return $this->ReturnData('makeup', $makeups, 'Done search');
         }
         catch (\Exception $ex)
         {
@@ -96,14 +103,17 @@ class ReportsController extends Controller
             $currentMonth = $today->month;
             $currentYear = $today->year;
 
-            $studio = Studio::with(['category', 'discount'])
+            $sudios = Studio::with(['category', 'discount'])
                 ->selection()
                 ->orderBy('id','desc')
                 ->whereMonth('created_at', $currentMonth)
                 ->whereYear('created_at', $currentYear)
                 ->paginate(pag);
 
-            return $this->ReturnData('studio', $studio, '200');
+            foreach ($sudios as $sudio) {
+                $sudio->notes = json_decode($sudio->notes, true); // تحويل notes إلى مصفوفة
+            }
+            return $this->ReturnData('studio', $sudios, '200');
         }
         catch (\Exception $ex)
         {
@@ -122,17 +132,19 @@ class ReportsController extends Controller
 
 
             // تأكد من تنسيق التواريخ بشكل صحيح
-            $studio = Studio::with(['category', 'discount'])
+            $sudios = Studio::with(['category', 'discount'])
                 ->whereBetween('created_at', [$dateStart, $dateEnd])
                 ->orderBy('id','desc')
                 ->get();
 
-            if ($studio->isEmpty())
+            if ($sudios->isEmpty())
             {
-                return $this->ReturnData('studio', $studio, 'Not Found');
+                return $this->ReturnData('studio', $sudios, 'Not Found');
             }
-
-            return $this->ReturnData('studio', $studio, 'Done search');
+            foreach ($sudios as $sudio) {
+                $sudio->notes = json_decode($sudio->notes, true); // تحويل notes إلى مصفوفة
+            }
+            return $this->ReturnData('studio', $sudios, 'Done search');
         }
         catch (\Exception $ex)
         {
