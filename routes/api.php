@@ -1,14 +1,18 @@
 <?php
 
+use App\Http\Controllers\AdditionalRentController;
 use App\Http\Controllers\AdminAuthController;
+use App\Http\Controllers\advantageLandController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\DailyController;
 use App\Http\Controllers\DiscountController;
 use App\Http\Controllers\EmployeeControler;
 use App\Http\Controllers\ExpenseController;
+use App\Http\Controllers\ImportantLandController;
 use App\Http\Controllers\Land;
 use App\Http\Controllers\LoansController;
 use App\Http\Controllers\MackupController;
+use App\Http\Controllers\MainLandController;
 use App\Http\Controllers\RentsController;
 use App\Http\Controllers\ReportsController;
 use App\Http\Controllers\SearchController;
@@ -211,14 +215,50 @@ Route::group(['prefix'=>'superAdmin'],function (){
     Route::group(['prefix'=>'land'],function (){
 
         Route::get('show',[Land::class,'show']);
+        Route::get('showMainLand',[Land::class,'showMainLand']);
+
+    });
+
+
+    Route::group(['prefix'=>'additionalRents'],function (){
+        Route::post('save',[AdditionalRentController::class,'save']);
+        Route::get('show',[AdditionalRentController::class,'show']);
+        Route::get('showWithoutPag',[AdditionalRentController::class,'showWithoutPag']);
+        Route::get('edit/{id}',[AdditionalRentController::class,'edit']);
+        Route::post('update/{id}',[AdditionalRentController::class,'update']);
+        Route::get('delete/{id}',[AdditionalRentController::class,'delete']);
+    });
+
+    Route::group(['prefix'=>'mainLand'],function (){
+        Route::post('save',[MainLandController::class,'save']);
+        Route::get('show',[MainLandController::class,'show']);
+        Route::get('showWithoutPag',[MainLandController::class,'showWithoutPag']);
+        Route::get('edit/{id}',[MainLandController::class,'edit']);
+        Route::post('update/{id}',[MainLandController::class,'update']);
+        Route::get('delete/{id}',[MainLandController::class,'delete']);
+        Route::post('updateStatus/{id}',[MainLandController::class,'updateStatus']);
+    });
+
+    Route::group(['prefix'=>'importantLand'],function (){
+        Route::post('save',[ImportantLandController::class,'save']);
+        Route::get('show',[ImportantLandController::class,'show']);
+        Route::get('showWithoutPag',[ImportantLandController::class,'showWithoutPag']);
+        Route::get('edit/{id}',[ImportantLandController::class,'edit']);
+        Route::post('update/{id}',[ImportantLandController::class,'update']);
+        Route::get('delete/{id}',[ImportantLandController::class,'delete']);
+
+    });
+
+    Route::group(['prefix'=>'advantageLand'],function (){
+        Route::post('save',[advantageLandController::class,'save']);
+        Route::get('show',[advantageLandController::class,'show']);
+        Route::get('showWithoutPag',[advantageLandController::class,'showWithoutPag']);
+        Route::get('edit/{id}',[advantageLandController::class,'edit']);
+        Route::post('update/{id}',[advantageLandController::class,'update']);
+        Route::get('delete/{id}',[advantageLandController::class,'delete']);
 
     });
 });
 
 
-Route::get('/updateapp', function()
-{
-    shell_exec('composer dump-autoload');
-    echo 'dump-autoload complete';
-});
 

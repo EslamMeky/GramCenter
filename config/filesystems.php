@@ -49,6 +49,24 @@ return [
             'url' => env('APP_URL').'/public',
             'visibility' => 'public',
         ],
+        'mainLand' => [
+            'driver' => 'local',
+            'root' => base_path('/public/assets/images/mainLand/'),
+            'url' => env('APP_URL').'/public',
+            'visibility' => 'public',
+        ],
+        'importantLand' => [
+            'driver' => 'local',
+            'root' => base_path('/public/assets/images/importantLand/'),
+            'url' => env('APP_URL').'/public',
+            'visibility' => 'public',
+        ],
+        'advantageLand' => [
+            'driver' => 'local',
+            'root' => base_path('/public/assets/images/advantageLand/'),
+            'url' => env('APP_URL').'/public',
+            'visibility' => 'public',
+        ],
 
         's3' => [
             'driver' => 's3',
