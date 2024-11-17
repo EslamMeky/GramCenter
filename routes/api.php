@@ -141,8 +141,6 @@ Route::group(['prefix'=>'superAdmin'],function (){
         Route::get('delete/{id}',[MackupController::class,'delete']);
         Route::post('updateInstallment/{id}',[MackupController::class,'updateInstallment']);
 
-
-
     });
 
     Route::group(['prefix'=>'studio'],function (){
@@ -206,6 +204,11 @@ Route::group(['prefix'=>'superAdmin'],function (){
         Route::post('SearchWorksReports',[ReportsController::class,'SearchWorksReports']);
 
         Route::get('showDailyTotal',[ReportsController::class,'showDailyTotal']);
+
+//        Route::get('loanReports',[ReportsController::class,'loanReports']);
+        Route::post('SearchLoanReports',[ReportsController::class,'SearchLoanReports']);
+
+        Route::post('searchDateDailyTotal',[ReportsController::class,'searchDateDailyTotal']);
 
 
 

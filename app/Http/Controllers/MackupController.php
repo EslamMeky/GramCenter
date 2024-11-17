@@ -392,7 +392,7 @@ class MackupController extends Controller
                 'typeHair'=>$request->typeHair,
                 'priceHair'=>$request->priceHair,
                 'dateHair'=>$request->dateHair,
-                'DateOfTheFirstInstallment'=>now(),
+//                'DateOfTheFirstInstallment'=>now(),
 
             ]);
 
@@ -427,39 +427,84 @@ class MackupController extends Controller
     {
         try
         {
-            $makeups= Makeup::find($id);
-            if (!$makeups)
+            $type=$request->type;
+            if($type=="superAdmin")
             {
-                return $this->ReturnError('404','Not Found');
+                $makeups= Makeup::find($id);
+                if (!$makeups)
+                {
+                    return $this->ReturnError('404','Not Found');
+                }
+                if ($request->has('secondInstallment') && $makeups->secondInstallment==null)
+                {
+                    $makeups->update([
+                        'secondInstallment'=>$request->secondInstallment,
+                        'DateOfTheSecondInstallment'=>$request->DateOfTheSecondInstallment,
+                        'pay'=>$request->pay,
+                        'rest'=>$request->rest,
+                        'total'=>$request->total,
+                        'status' => $request->rest == 0 ? 'تم الدفع' : 'لم يتم الدفع',
+
+                    ]);
+                    return $this->ReturnSuccess('200','updated secondInstallment Successfully');
+
+                }
+                elseif ($request->has('thirdInstallment') && $makeups->secondInstallment!=null)
+                {
+                    $makeups->update([
+                        'thirdInstallment'=>$request->thirdInstallment,
+                        'DateOfTheThirdInstallment'=>$request->DateOfTheThirdInstallment,
+                        'pay'=>$request->pay,
+                        'rest'=>$request->rest,
+                        'total'=>$request->total,
+                        'status' => $request->rest == 0 ? 'تم الدفع' : 'لم يتم الدفع',
+
+                    ]);
+                    return $this->ReturnSuccess('200','updated third Installment Successfully');
+                }
+
+
             }
-            if ($request->has('secondInstallment') && $makeups->secondInstallment==null)
+            elseif ($type=="admin"){
+                $makeups= Makeup::find($id);
+                if (!$makeups)
+                {
+                    return $this->ReturnError('404','Not Found');
+                }
+                if ($request->has('secondInstallment') && $makeups->secondInstallment==null)
+                {
+                    $makeups->update([
+                        'secondInstallment'=>$request->secondInstallment,
+                        'DateOfTheSecondInstallment'=>now(),
+                        'pay'=>$request->pay,
+                        'rest'=>$request->rest,
+                        'total'=>$request->total,
+                        'status' => $request->rest == 0 ? 'تم الدفع' : 'لم يتم الدفع',
+
+                    ]);
+                    return $this->ReturnSuccess('200','updated secondInstallment Successfully');
+
+                }
+                elseif ($request->has('thirdInstallment')&& $makeups->secondInstallment!=null)
+                {
+                    $makeups->update([
+                        'thirdInstallment'=>$request->thirdInstallment,
+                        'DateOfTheThirdInstallment'=>now(),
+                        'pay'=>$request->pay,
+                        'rest'=>$request->rest,
+                        'total'=>$request->total,
+                        'status' => $request->rest == 0 ? 'تم الدفع' : 'لم يتم الدفع',
+
+                    ]);
+                    return $this->ReturnSuccess('200','updated third Installment Successfully');
+                }
+
+
+            }
+            else
             {
-                $makeups->update([
-                   'secondInstallment'=>$request->secondInstallment,
-                   'DateOfTheSecondInstallment'=>now(),
-                    'pay'=>$request->pay,
-                    'rest'=>$request->rest,
-                    'total'=>$request->total,
-                    'status' => $request->rest == 0 ? 'تم الدفع' : 'لم يتم الدفع',
-
-                ]);
-                return $this->ReturnSuccess('200','updated secondInstallment Successfully');
-
+                return $this->ReturnError("E00",'NoType');
             }
-            elseif ($request->has('thirdInstallment')&& $makeups->secondInstallment!=null)
-            {
-                $makeups->update([
-                    'thirdInstallment'=>$request->thirdInstallment,
-                    'DateOfTheThirdInstallment'=>now(),
-                    'pay'=>$request->pay,
-                    'rest'=>$request->rest,
-                    'total'=>$request->total,
-                    'status' => $request->rest == 0 ? 'تم الدفع' : 'لم يتم الدفع',
-
-                ]);
-                return $this->ReturnSuccess('200','updated third Installment Successfully');
-            }
-
         }
         catch (\Exception $ex){
             return $this->ReturnError($ex->getCode(),$ex->getMessage());
