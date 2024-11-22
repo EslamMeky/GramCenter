@@ -334,6 +334,26 @@ class SearchController extends Controller
         }
     }
 
+    public function searchHair(Request $request){
+        try
+        {
+            $today = $request->today;// Format the date to 'Y-m-d'
+//            $tomorrow = Carbon::now()->addDay()->toDateString();
+            $hairs= Makeup::with(['category','discount'])->selection()
+                ->orderBy('id','desc')
+                ->whereDate('dateHair', $today)
+                ->get();
+            foreach ($hairs as $hair) {
+                $hair->notes = json_decode($hair->notes, true); // تحويل notes إلى مصفوفة
+            }
 
+            return $this->ReturnData('hairs',$hairs,'200');
+
+        }
+        catch (\Exception $ex)
+        {
+            return $this->ReturnError($ex->getCode(),$ex->getCode());
+        }
+    }
 
 }
