@@ -435,23 +435,10 @@ class MackupController extends Controller
                 {
                     return $this->ReturnError('404','Not Found');
                 }
-                if ($request->has('secondInstallment') && $makeups->secondInstallment==null)
-                {
+
                     $makeups->update([
                         'secondInstallment'=>$request->secondInstallment,
                         'DateOfTheSecondInstallment'=>$request->DateOfTheSecondInstallment,
-                        'pay'=>$request->pay,
-                        'rest'=>$request->rest,
-                        'total'=>$request->total,
-                        'status' => $request->rest == 0 ? 'تم الدفع' : 'لم يتم الدفع',
-
-                    ]);
-                    return $this->ReturnSuccess('200','updated secondInstallment Successfully');
-
-                }
-                elseif ($request->has('thirdInstallment') && $makeups->secondInstallment!=null)
-                {
-                    $makeups->update([
                         'thirdInstallment'=>$request->thirdInstallment,
                         'DateOfTheThirdInstallment'=>$request->DateOfTheThirdInstallment,
                         'pay'=>$request->pay,
@@ -460,8 +447,7 @@ class MackupController extends Controller
                         'status' => $request->rest == 0 ? 'تم الدفع' : 'لم يتم الدفع',
 
                     ]);
-                    return $this->ReturnSuccess('200','updated third Installment Successfully');
-                }
+                    return $this->ReturnSuccess('200','updated  Successfully');
 
 
             }

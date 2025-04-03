@@ -298,7 +298,10 @@ class SearchController extends Controller
         {
             $date = $request->date;
 
-            $makeup = Makeup::with(['category','discount'])->where('appropriate',$date)->get();
+            $makeup = Makeup::with(['category','discount'])
+                ->where('appropriate',$date)
+                ->orWhereDate('dateService', $date)
+                ->get();
 //                ->orWhere('lname','LIKE',"%$search%")->get();
             if ($makeup -> isEmpty())
             {

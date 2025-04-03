@@ -54,6 +54,20 @@ class WorksController extends Controller
         }
     }
 
+    public function showlast()
+    {
+        try {
+            $works= Work::with(['employee'])
+                ->selection()
+                ->latest()
+                ->first();
+            return $this->ReturnData('works',$works,'200');
+        }
+        catch (\Exception $ex)
+        {
+            return $this->ReturnError($ex->getCode(),$ex->getCode());
+        }
+    }
     public function edit($id)
     {
         try

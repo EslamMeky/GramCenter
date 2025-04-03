@@ -192,22 +192,10 @@ class StudioController extends Controller
                 if (!$studios) {
                     return $this->ReturnError('404', 'Not Found');
                 }
-                if ($request->has('secondInstallment') && $studios->secondInstallment==null)
-                {
+
                     $studios->update([
                         'secondInstallment' => $request->secondInstallment,
                         'DateOfTheSecondInstallment' => $request->DateOfTheSecondInstallment,
-                        'pay' => $request->pay,
-                        'rest' => $request->rest,
-                        'total' => $request->total,
-                        'status' => $request->rest == 0 ? 'تم الدفع' : 'لم يتم الدفع',
-
-                    ]);
-                    return $this->ReturnSuccess('200', 'updated secondInstallment Successfully');
-
-                } elseif ($request->has('thirdInstallment') && $studios->secondInstallment!=null)
-                {
-                    $studios->update([
                         'thirdInstallment' => $request->thirdInstallment,
                         'DateOfTheThirdInstallment' => $request->DateOfTheThirdInstallment,
                         'pay' => $request->pay,
@@ -216,8 +204,8 @@ class StudioController extends Controller
                         'status' => $request->rest == 0 ? 'تم الدفع' : 'لم يتم الدفع',
 
                     ]);
-                    return $this->ReturnSuccess('200', 'updated third Installment Successfully');
-                }
+                    return $this->ReturnSuccess('200', 'updated  Successfully');
+
 
             }
             elseif ($type=="admin")

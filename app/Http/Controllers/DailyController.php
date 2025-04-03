@@ -78,17 +78,20 @@ class DailyController extends Controller
             $today = Carbon::now()->toDateString(); // Format the date to 'Y-m-d'
 //            $tomorrow = Carbon::now()->addDay()->toDateString();
 
-            $makeups= Makeup::with(['category','discount'])->selection()->orderBy('id','desc')->whereDate('appropriate', $today)->paginate(pag);
+            $makeups= Makeup::with(['category','discount'])->selection()->orderBy('id','desc')
+                ->whereDate('appropriate', $today)
+                ->orWhereDate('dateService', $today)
+                ->paginate(pag);
             foreach ($makeups as $makeup) {
                 $makeup->notes = json_decode($makeup->notes, true); // تحويل notes إلى مصفوفة
             }
-            $services= Makeup::with(['category','discount'])->selection()->orderBy('id','desc')->whereDate('dateService', $today)->paginate(pag);
-            foreach ($services as $service) {
-                $service->notes = json_decode($service->notes, true); // تحويل notes إلى مصفوفة
-            }
+//            $services= Makeup::with(['category','discount'])->selection()->orderBy('id','desc')->whereDate('dateService', $today)->paginate(pag);
+//            foreach ($services as $service) {
+//                $service->notes = json_decode($service->notes, true); // تحويل notes إلى مصفوفة
+//            }
             $data=[
                 'makeups'=>$makeups,
-                'services'=>$services
+//                'services'=>$services
             ];
             return $this->ReturnData('data',$data,'200');
         }
@@ -123,4 +126,31 @@ class DailyController extends Controller
 
         }
     }
+//    public function showLastPrintMakeup()
+//    {
+//        try
+//        {
+//
+//            $makeups = Makeup::with(['category', 'discount'])
+//                ->selection()
+//                ->latest()
+//                ->first();
+//            foreach ($makeups as $makeup) {
+//                $makeup->notes = json_decode($makeup->notes, true); // تحويل notes إلى مصفوفة
+//            }
+////
+//            $data=[
+//                'makeups'=>$makeups,
+////                'services'=>$services
+//            ];
+//            return $this->ReturnData('data',$data,'200');
+//        }
+//        catch (\Exception $ex)
+//        {
+//            return $this->ReturnError($ex->getCode(),$ex->getMessage());
+//
+//        }
+//    }
+//
+
 }
